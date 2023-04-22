@@ -1,4 +1,4 @@
-package com.laad.viniloapp.ui
+package com.laad.viniloapp.views
 
 import android.os.Bundle
 import android.util.Log

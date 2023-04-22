@@ -5,8 +5,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import com.laad.viniloapp.ui.HomeActivity
 import com.laad.viniloapp.utilities.AppRole
+import com.laad.viniloapp.utilities.ROLE
+import com.laad.viniloapp.views.HomeActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,7 +30,4 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    companion object {
-        const val ROLE = "role"
-    }
 }
