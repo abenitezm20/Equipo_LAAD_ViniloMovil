@@ -1,36 +1,46 @@
 package com.laad.viniloapp.views
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.laad.viniloapp.R
 import com.laad.viniloapp.databinding.FragmentHomeBinding
+import com.laad.viniloapp.models.Album
 import com.laad.viniloapp.viewmodels.HomeViewModel
+import com.laad.viniloapp.viewmodels.SlideshowViewModel
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
+    private lateinit var viewModel: HomeViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        val homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        return binding.root
+    }
 
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+    override fun onStart() {
+        super.onStart()
+
+        // Obtener el TextView del layout
+        val stringTextHome = view?.findViewById<TextView>(R.id.text_home)
+
+        viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
+        viewModel.albums.observe(viewLifecycleOwner) {
+            Log.d("HomeFragment", it.toString())
+            if (stringTextHome != null) {
+                stringTextHome.text = it.toString()
+            }
         }
-        return root
     }
 
     override fun onDestroyView() {

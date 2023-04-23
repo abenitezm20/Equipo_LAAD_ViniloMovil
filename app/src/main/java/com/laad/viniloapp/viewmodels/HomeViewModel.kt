@@ -1,13 +1,36 @@
 package com.laad.viniloapp.viewmodels
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.laad.viniloapp.data.AlbumRepository
+import com.laad.viniloapp.models.Album
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+    private val albumsRepository = AlbumRepository(application)
+
+    private val _albums = MutableLiveData<List<Album>>()
+
+    private var _eventNetworkError = MutableLiveData<Boolean>(false)
+    val eventNetworkError: LiveData<Boolean>
+        get() = _eventNetworkError
+
+    val albums: LiveData<List<Album>>
+        get() = _albums
+
+    init {
+        consultaAlbum()
     }
-    val text: LiveData<String> = _text
+
+    private fun consultaAlbum() {
+        albumsRepository.consultaAlbum({
+            _albums.postValue(it)
+        }, {
+            _eventNetworkError.value = true
+        })
+    }
+
 }

@@ -9,22 +9,26 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.laad.viniloapp.R
+import com.laad.viniloapp.databinding.FragmentGalleryBinding
+import com.laad.viniloapp.databinding.FragmentSlideshowBinding
 import com.laad.viniloapp.viewmodels.GalleryViewModel
 
 class GalleryFragment : Fragment() {
 
-    private lateinit var galleryViewModel: GalleryViewModel
+    private var _binding: FragmentGalleryBinding? = null
+    private val binding get() = _binding!!
 
+    private lateinit var galleryViewModel: GalleryViewModel
     private lateinit var stringTextView: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        // Inicializar el ViewModel
-        galleryViewModel = ViewModelProvider(this).get(GalleryViewModel::class.java)
+        _binding = FragmentGalleryBinding.inflate(inflater, container, false)
+        val view = binding.root
 
-        // Inflar la vista del Fragment
-        val view = inflater.inflate(R.layout.fragment_gallery, container, false)
+        // Inicializar el ViewModel
+        galleryViewModel = ViewModelProvider(this)[GalleryViewModel::class.java]
 
         // Obtener el TextView del layout
         val stringTextView = view.findViewById<TextView>(R.id.text_gallery)
@@ -41,5 +45,10 @@ class GalleryFragment : Fragment() {
         }
 
         return view
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

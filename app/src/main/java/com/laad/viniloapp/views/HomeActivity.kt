@@ -59,13 +59,6 @@ class HomeActivity : AppCompatActivity() {
         textViewAppRole.text = getString(getStringRoleValue(role))
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        Log.d("HomeActivity", "onCreateOptionsMenu")
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.home, menu)
-        return true
-    }
-
     override fun onSupportNavigateUp(): Boolean {
         Log.d("HomeActivity", "onSupportNavigateUp")
         val navController = findNavController(R.id.nav_host_fragment_content_home)
