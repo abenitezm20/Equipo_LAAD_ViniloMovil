@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.laad.viniloapp.R
 import com.laad.viniloapp.databinding.AlbumItemBinding
 import com.laad.viniloapp.models.Album
-import com.laad.viniloapp.views.AlbumFragmentDirections
+//import com.laad.viniloapp.views.AlbumFragmentDirections
 //import com.laad.viniloapp.views.AlbumFragmentDirections
 import kotlin.Int
 
@@ -38,9 +38,9 @@ class AlbumAdapter : RecyclerView.Adapter<AlbumAdapter.AlbumViewHolder>(){
         }
         holder.viewDataBinding.root.setOnClickListener {
             //val action = AlbumFragmentDirections.actionAlbumFragmentToCommentFragment(albums[position].id)
-            val action = AlbumFragmentDirections.actionAlbumFragmentToNavSlideshow()
+            //val action = AlbumFragmentDirections.actionAlbumFragmentToNavSlideshow()
             // Navigate using that action
-            holder.viewDataBinding.root.findNavController().navigate(action)
+            //holder.viewDataBinding.root.findNavController().navigate(action)
         }
     }
 

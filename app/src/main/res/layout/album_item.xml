@@ -29,14 +29,22 @@
                 <TextView
                     android:id="@+id/textView6"
                     android:layout_width="match_parent"
-                    android:layout_height="154dp"
-                    android:text="@{album.name}" />
+                    android:layout_height="38dp"
+                    android:background="@color/Fondo"
+                    android:text="@{album.name}"
+                    android:textColor="@color/Azul"
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/textView5"
                     android:layout_width="match_parent"
-                    android:layout_height="280dp"
-                    android:text="@{album.description}" />
+                    android:layout_height="399dp"
+                    android:background="@color/Fondo"
+                    android:text="@{album.description}"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/Letra_lista"
+                    android:textColorHighlight="@color/white"
+                    android:textSize="20sp" />
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

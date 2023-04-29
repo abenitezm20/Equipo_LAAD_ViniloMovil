@@ -25,10 +25,7 @@
     <fragment
         android:id="@+id/nav_albums"
         android:name="com.laad.viniloapp.views.AlbumFragment"
-        android:label="album_fragment"
+        android:label="Álbumes"
         tools:layout="@layout/album_fragment" >
-        <action
-            android:id="@+id/action_albumFragment_to_nav_slideshow"
-            app:destination="@id/nav_slideshow" />
     </fragment>
 </navigation>

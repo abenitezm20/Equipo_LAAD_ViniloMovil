@@ -2,4 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="Azul">#24CEF0</color>
+    <color name="Fondo">#1E1521</color>
+    <color name="Gris">#7E7E7E</color>
+    <color name="Letra_lista">#7E7E7E</color>
 </resources>
