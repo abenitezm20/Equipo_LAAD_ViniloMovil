@@ -13,7 +13,7 @@ import org.json.JSONArray
 class ViniloServiceAdapter constructor(context: Context) {
 
     companion object {
-        const val BASE_URL = "http://127.0.0.1:3000/"
+        const val BASE_URL = "https://sgt-backvinyls.herokuapp.com/"
         var instance: ViniloServiceAdapter? = null
         fun getInstance(context: Context) = instance ?: synchronized(this) {
             instance ?: ViniloServiceAdapter(context).also {
