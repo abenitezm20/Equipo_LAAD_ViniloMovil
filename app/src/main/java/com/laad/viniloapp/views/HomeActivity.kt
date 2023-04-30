@@ -79,12 +79,15 @@ class HomeActivity : AppCompatActivity() {
         val menu = navView.menu
         val albums = menu.findItem(R.id.nav_albums)
         val collector = menu.findItem(R.id.nav_collector)
+        val artist = menu.findItem(R.id.nav_artist)
         albums.isVisible = true
         collector.isVisible=true
+        artist.isVisible=true
         if(role == AppRole.VISITOR.value){
             collector.isVisible = false
         }else if (role == AppRole.COLLECTOR.value){
             albums.isVisible = true
+            artist.isVisible = true
         }
     }
 }
