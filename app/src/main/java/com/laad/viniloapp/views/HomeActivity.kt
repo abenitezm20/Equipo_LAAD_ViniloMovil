@@ -41,7 +41,7 @@ class HomeActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_albums
+                R.id.nav_home, R.id.nav_albums, R.id.nav_collector
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -79,9 +79,11 @@ class HomeActivity : AppCompatActivity() {
     private fun menuSetting(role:String, navView:NavigationView){
         val menu = navView.menu
         val albums = menu.findItem(R.id.nav_albums)
+        val collector = menu.findItem(R.id.nav_collector)
         albums.isVisible = true
+        collector.isVisible=true
         if(role == AppRole.VISITOR.value){
-            albums.isVisible = true
+            collector.isVisible = false
         }else if (role == AppRole.COLLECTOR.value){
             albums.isVisible = false
         }
