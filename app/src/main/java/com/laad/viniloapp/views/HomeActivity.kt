@@ -84,7 +84,7 @@ class HomeActivity : AppCompatActivity() {
         if(role == AppRole.VISITOR.value){
             collector.isVisible = false
         }else if (role == AppRole.COLLECTOR.value){
-            albums.isVisible = false
+            albums.isVisible = true
         }
     }
 }
