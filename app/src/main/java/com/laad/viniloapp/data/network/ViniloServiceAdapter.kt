@@ -10,6 +10,7 @@ import com.android.volley.toolbox.Volley
 import com.laad.viniloapp.models.Album
 import com.laad.viniloapp.models.Artist
 import org.json.JSONArray
+import java.text.SimpleDateFormat
 
 class ViniloServiceAdapter constructor(context: Context) {
 
@@ -56,18 +57,22 @@ class ViniloServiceAdapter constructor(context: Context) {
     }
 
     fun getArtists(onComplete: (resp: List<Artist>) -> Unit, onError: (error: VolleyError) -> Unit) {
+        val dOriginal = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+        val dFormat = SimpleDateFormat("yyyy-MM-dd")
         requestQueue.add(
             getRequest("musicians", {response ->
                 val resp = JSONArray(response)
                 val list = mutableListOf<Artist>()
 
+
                 for (i in 0 until resp.length()) {
                     var item = resp.getJSONObject(i)
+
                     list.add(
                         i, Artist(
-                            name = item.getString("name"),
+                            name ="Nombre: " + item.getString("name"),
                             image = item.getString("image"),
-                            birthDate = item.getString("birthDate")
+                            birthDate ="Fecha de nacimiento: " + dFormat.format(dOriginal.parse(item.getString("birthDate")))
                         )
                     )
                 }
