@@ -55,12 +55,17 @@ public class TestListarAlbums {
         menu.perform(DrawerActions.open())
         Thread.sleep(1000)
 
+        //selecciona opcion del menu
         val listAlbumSelec =
             onView(withId(R.id.nav_albums))
         listAlbumSelec.perform(click());
 
-        Log.d("listarAlbumesTest", onView(withId(R.id.nav_albums)).)
-        onView(withId(R.id.nav_albums)).check(matches(withText("Buscando América")))
+        //buscando el titulo de un album
+        Log.d("listarAlbumesTest", onView(withId(R.id.textView6)).toString())
+        //onView(withId(R.id.textView6)).check(matches(withText("Buscando América")))
+        onView(allOf(withId(R.id.textView6), withText("rwerwerwrwerwer")))
+        onView(allOf(withId(R.id.textView6), withText("Buscando Ámerica"))).check(matches(withText("Buscando Ámerica")))
+        onView(withText(R.string.menu_sort_length)).check(matches(isDisplayed()));
 
         //val albumTitleText = onView(allOf(withId(R.id.textView6)))
         //Log.d("listarAlbumesTest", albumTitleText.toString())
