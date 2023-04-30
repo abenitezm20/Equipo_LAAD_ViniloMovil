@@ -7,13 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.laad.viniloapp.R
 import com.laad.viniloapp.databinding.FragmentHomeBinding
-import com.laad.viniloapp.models.Album
 import com.laad.viniloapp.viewmodels.HomeViewModel
-import com.laad.viniloapp.viewmodels.SlideshowViewModel
 
 class HomeFragment : Fragment() {
 
