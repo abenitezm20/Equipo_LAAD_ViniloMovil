@@ -36,3 +36,21 @@ La otra opción es generar el APK y pasar el archivo a un dispositivo Android pa
 
 ![image](https://user-images.githubusercontent.com/111475768/235372673-5de88251-159e-4e7b-997d-20d80e2f2109.png)
 
+
+## Paso para instalar el APK
+1. Descargue el APK en su dispositivo móvil, posterior a ello diríjase a la carpeta de descarga o donde se guardó el APK, luego de clic sobre este y seleccione la opción de INSTALAR
+
+![image](https://user-images.githubusercontent.com/111399963/235379644-70d05416-27b1-4462-b262-fc758d8cd1fb.png)
+
+2. Al generarse la siguiente advertencia de bloqueo de aplicación no segura de clic en "Más detalles" y luego en "Instalar de todas formas" como se muestra a continuación:
+
+![image](https://user-images.githubusercontent.com/111399963/235379636-e4c4a079-6699-4134-b731-032ba0c02d8d.png)   
+![image](https://user-images.githubusercontent.com/111399963/235379615-630436cb-da69-4549-b8aa-29127d3801d3.png)
+
+
+
+
+
+
+
+
