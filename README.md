@@ -38,8 +38,8 @@ La otra opción es generar el APK y pasar el archivo a un dispositivo Android pa
 
 
 ## Pasos para instalar el APK
-1. Descargue el [APK](https://uniandes-my.sharepoint.com/:u:/g/personal/a_benitezm_uniandes_edu_co/EdBl4eyJi-5BqxVwZyY9tDQBdIDFrp5xX1-znPJiAS85ag?e=t93qD9)
-3. en su dispositivo móvil, posterior a ello diríjase a la carpeta de descarga o donde se guardó el APK, luego de clic sobre este y seleccione la opción de INSTALAR
+1. Descargue el [APK](https://uniandes-my.sharepoint.com/:u:/g/personal/a_benitezm_uniandes_edu_co/EdBl4eyJi-5BqxVwZyY9tDQBdIDFrp5xX1-znPJiAS85ag?e=t93qD9) en su dispositivo móvil
+2. Posterior a ello diríjase a la carpeta de descargas o donde se guardó el APK. Luego de clic sobre este y seleccione la opción de INSTALAR
 
 ![image](https://user-images.githubusercontent.com/111399963/235379644-70d05416-27b1-4462-b262-fc758d8cd1fb.png)
 
