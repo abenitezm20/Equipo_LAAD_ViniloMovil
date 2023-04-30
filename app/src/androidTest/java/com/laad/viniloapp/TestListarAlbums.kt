@@ -6,6 +6,7 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.assertion.ViewAssertions
+import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.DrawerActions
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
@@ -17,6 +18,7 @@ import org.junit.runner.RunWith
 import org.junit.Rule
 import org.junit.Test
 import org.hamcrest.Matchers.allOf
+import org.hamcrest.Matchers.not
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
