@@ -40,7 +40,7 @@ class HomeActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow, R.id.nav_albums, R.id.nav_artist
+                R.id.nav_home, R.id.nav_albums, R.id.nav_collector, R.id.nav_artist
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -56,6 +56,7 @@ class HomeActivity : AppCompatActivity() {
         val headerView = navigationView.getHeaderView(0)
         val textViewAppRole: TextView = headerView.findViewById(R.id.textViewAppRole)
         textViewAppRole.text = getString(getStringRoleValue(role))
+        menuSetting(role, navigationView);
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -71,6 +72,19 @@ class HomeActivity : AppCompatActivity() {
             else -> {
                 R.string.nav_view_role_visitor
             }
+        }
+    }
+
+    private fun menuSetting(role:String, navView:NavigationView){
+        val menu = navView.menu
+        val albums = menu.findItem(R.id.nav_albums)
+        val collector = menu.findItem(R.id.nav_collector)
+        albums.isVisible = true
+        collector.isVisible=true
+        if(role == AppRole.VISITOR.value){
+            collector.isVisible = false
+        }else if (role == AppRole.COLLECTOR.value){
+            albums.isVisible = false
         }
     }
 }
