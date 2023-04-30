@@ -24,7 +24,17 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:divider="?android:dividerHorizontal"
+                android:orientation="vertical"
+                android:showDividers="end">
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="match_parent"
+                    android:layout_height="68dp"
+                    android:background="@color/Fondo"
+                    android:textColor="@color/Azul"
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/textView6"
