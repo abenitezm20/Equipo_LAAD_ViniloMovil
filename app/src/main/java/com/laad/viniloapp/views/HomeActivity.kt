@@ -2,7 +2,6 @@ package com.laad.viniloapp.views
 
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
@@ -41,7 +40,7 @@ class HomeActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_albums, R.id.nav_collector
+                R.id.nav_home, R.id.nav_albums, R.id.nav_collector, R.id.nav_artist
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -55,7 +54,7 @@ class HomeActivity : AppCompatActivity() {
         val role: String = intent.getStringExtra("role") ?: AppRole.VISITOR.value
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
         val headerView = navigationView.getHeaderView(0)
-        val textViewAppRole: TextView = headerView.findViewById<TextView>(R.id.textViewAppRole)
+        val textViewAppRole: TextView = headerView.findViewById(R.id.textViewAppRole)
         textViewAppRole.text = getString(getStringRoleValue(role))
         menuSetting(role, navigationView);
     }
@@ -80,12 +79,15 @@ class HomeActivity : AppCompatActivity() {
         val menu = navView.menu
         val albums = menu.findItem(R.id.nav_albums)
         val collector = menu.findItem(R.id.nav_collector)
+        val artist = menu.findItem(R.id.nav_artist)
         albums.isVisible = true
         collector.isVisible=true
+        artist.isVisible=true
         if(role == AppRole.VISITOR.value){
             collector.isVisible = false
         }else if (role == AppRole.COLLECTOR.value){
-            albums.isVisible = false
+            albums.isVisible = true
+            artist.isVisible = true
         }
     }
 }
