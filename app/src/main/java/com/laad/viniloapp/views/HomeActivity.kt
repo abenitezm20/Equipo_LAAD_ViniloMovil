@@ -57,6 +57,7 @@ class HomeActivity : AppCompatActivity() {
         val headerView = navigationView.getHeaderView(0)
         val textViewAppRole: TextView = headerView.findViewById<TextView>(R.id.textViewAppRole)
         textViewAppRole.text = getString(getStringRoleValue(role))
+        menuSetting(role, navigationView);
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -72,6 +73,17 @@ class HomeActivity : AppCompatActivity() {
             else -> {
                 R.string.nav_view_role_visitor
             }
+        }
+    }
+
+    private fun menuSetting(role:String, navView:NavigationView){
+        val menu = navView.menu
+        val albums = menu.findItem(R.id.nav_albums)
+        albums.isVisible = true
+        if(role == AppRole.VISITOR.value){
+            albums.isVisible = true
+        }else if (role == AppRole.COLLECTOR.value){
+            albums.isVisible = false
         }
     }
 }
