@@ -8,6 +8,7 @@ import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.laad.viniloapp.models.Album
+import com.laad.viniloapp.models.Artist
 import org.json.JSONArray
 
 class ViniloServiceAdapter constructor(context: Context) {
@@ -51,6 +52,27 @@ class ViniloServiceAdapter constructor(context: Context) {
             }, {
                 onError(it)
             })
+        )
+    }
+
+    fun getArtists(onComplete: (resp: List<Artist>) -> Unit, onError: (error: VolleyError) -> Unit) {
+        requestQueue.add(
+            getRequest("musicians", {response ->
+                val resp = JSONArray(response)
+                val list = mutableListOf<Artist>()
+
+                for (i in 0 until resp.length()) {
+                    var item = resp.getJSONObject(i)
+                    list.add(
+                        i, Artist(
+                            name = item.getString("name"),
+                            image = item.getString("image"),
+                            birthDate = item.getString("birthDate")
+                        )
+                    )
+                }
+                onComplete(list)
+            }, {onError(it)})
         )
     }
 

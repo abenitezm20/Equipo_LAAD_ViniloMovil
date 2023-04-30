@@ -14,7 +14,12 @@
         android:id="@+id/nav_albums"
         android:name="com.laad.viniloapp.views.AlbumFragment"
         android:label="Álbumes"
-        tools:layout="@layout/album_fragment" >
+        tools:layout="@layout/album_fragment" />
+    <fragment
+        android:id="@+id/nav_artist"
+        android:name="com.laad.viniloapp.views.ArtistFragment"
+        android:label="Artist"
+        tools:layout="@layout/artist_fragment" >
     </fragment>
     <fragment
         android:id="@+id/nav_collector"
