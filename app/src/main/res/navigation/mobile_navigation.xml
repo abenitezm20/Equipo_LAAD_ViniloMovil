@@ -25,6 +25,8 @@
         android:id="@+id/nav_collector"
         android:name="com.laad.viniloapp.views.CollectorFragment"
         android:label="Crear Álbum"
-        tools:layout="@layout/fragment_collector" >
+        tools:layout="@layout/fragment_collector"
+
+        >
     </fragment>
 </navigation>
