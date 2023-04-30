@@ -9,17 +9,28 @@
         android:id="@+id/nav_home"
         android:name="com.laad.viniloapp.views.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_nav_home_to_mainActivity"
+            app:destination="@id/mainActivity" />
+    </fragment>
     <fragment
         android:id="@+id/nav_albums"
         android:name="com.laad.viniloapp.views.AlbumFragment"
         android:label="Álbumes"
-        tools:layout="@layout/album_fragment" />
+        tools:layout="@layout/album_fragment" >
+        <action
+            android:id="@+id/action_nav_albums_to_mainActivity"
+            app:destination="@id/mainActivity" />
+    </fragment>
     <fragment
         android:id="@+id/nav_artist"
         android:name="com.laad.viniloapp.views.ArtistFragment"
         android:label="Artist"
         tools:layout="@layout/artist_fragment" >
+        <action
+            android:id="@+id/action_nav_artist_to_mainActivity"
+            app:destination="@id/mainActivity" />
     </fragment>
     <fragment
         android:id="@+id/nav_collector"
@@ -28,5 +39,13 @@
         tools:layout="@layout/fragment_collector"
 
         >
+        <action
+            android:id="@+id/action_nav_collector_to_mainActivity"
+            app:destination="@id/mainActivity" />
     </fragment>
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.laad.viniloapp.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
 </navigation>
