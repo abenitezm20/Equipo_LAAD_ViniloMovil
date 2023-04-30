@@ -41,7 +41,6 @@ class HomeActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_home, R.id.nav_albums, R.id.nav_collector, R.id.nav_artist
-
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -87,7 +86,8 @@ class HomeActivity : AppCompatActivity() {
         if(role == AppRole.VISITOR.value){
             collector.isVisible = false
         }else if (role == AppRole.COLLECTOR.value){
-            artist.isVisible = false
+            albums.isVisible = true
+            artist.isVisible = true
         }
     }
 }

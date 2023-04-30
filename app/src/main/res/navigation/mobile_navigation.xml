@@ -26,7 +26,7 @@
     <fragment
         android:id="@+id/nav_artist"
         android:name="com.laad.viniloapp.views.ArtistFragment"
-        android:label="Artist"
+        android:label="Artistas"
         tools:layout="@layout/artist_fragment" >
         <action
             android:id="@+id/action_nav_artist_to_mainActivity"
@@ -43,6 +43,7 @@
             android:id="@+id/action_nav_collector_to_mainActivity"
             app:destination="@id/mainActivity" />
     </fragment>
+
     <activity
         android:id="@+id/mainActivity"
         android:name="com.laad.viniloapp.MainActivity"
