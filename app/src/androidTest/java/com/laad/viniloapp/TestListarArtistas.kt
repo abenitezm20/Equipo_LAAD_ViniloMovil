@@ -70,7 +70,7 @@ public class TestListarArtistas {
         Espresso.onView(
             Matchers.allOf(
                 ViewMatchers.withId(R.id.textView7),
-                ViewMatchers.withText("Rubén Blades Bellido de Luna")
+                ViewMatchers.withText("Nombre: Rubén Blades Bellido de Luna")
             )
         ).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
     }
