@@ -1,6 +1,7 @@
 package com.laad.viniloapp.data.network
 
 import android.content.Context
+import android.util.Log
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
@@ -11,6 +12,9 @@ import com.laad.viniloapp.models.Album
 import com.laad.viniloapp.models.Artist
 import org.json.JSONArray
 import java.text.SimpleDateFormat
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 class ViniloServiceAdapter constructor(context: Context) {
 
@@ -29,7 +33,8 @@ class ViniloServiceAdapter constructor(context: Context) {
         Volley.newRequestQueue(context.applicationContext)
     }
 
-    fun getAlbums(onComplete: (resp: List<Album>) -> Unit, onError: (error: VolleyError) -> Unit) {
+    suspend fun getAlbums() = suspendCoroutine<List<Album>> { cont ->
+        Log.d("ViniloServiceAdapter", "Consultando albumes")
         requestQueue.add(
             getRequest("albums", { response ->
                 val resp = JSONArray(response)
@@ -49,18 +54,21 @@ class ViniloServiceAdapter constructor(context: Context) {
                         )
                     )
                 }
-                onComplete(list)
+                Log.d("ViniloServiceAdapter", list.size.toString() + " albumes consultados")
+                cont.resume(list)
             }, {
-                onError(it)
+                cont.resumeWithException(it)
             })
         )
     }
 
-    fun getArtists(onComplete: (resp: List<Artist>) -> Unit, onError: (error: VolleyError) -> Unit) {
+    fun getArtists(
+        onComplete: (resp: List<Artist>) -> Unit, onError: (error: VolleyError) -> Unit
+    ) {
         val dOriginal = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
         val dFormat = SimpleDateFormat("yyyy-MM-dd")
         requestQueue.add(
-            getRequest("musicians", {response ->
+            getRequest("musicians", { response ->
                 val resp = JSONArray(response)
                 val list = mutableListOf<Artist>()
 
@@ -70,14 +78,18 @@ class ViniloServiceAdapter constructor(context: Context) {
 
                     list.add(
                         i, Artist(
-                            name ="Nombre: " + item.getString("name"),
+                            name = "Nombre: " + item.getString("name"),
                             image = item.getString("image"),
-                            birthDate ="Fecha de nacimiento: " + dFormat.format(dOriginal.parse(item.getString("birthDate")))
+                            birthDate = "Fecha de nacimiento: " + dFormat.format(
+                                dOriginal.parse(
+                                    item.getString("birthDate")
+                                )
+                            )
                         )
                     )
                 }
                 onComplete(list)
-            }, {onError(it)})
+            }, { onError(it) })
         )
     }
 
