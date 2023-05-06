@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.laad.viniloapp.R
 import com.laad.viniloapp.databinding.AlbumItemBinding
 import com.laad.viniloapp.models.Album
+import com.laad.viniloapp.views.AlbumFragmentDirections
 
 class AlbumAdapter : RecyclerView.Adapter<AlbumAdapter.AlbumViewHolder>() {
 
@@ -29,6 +31,13 @@ class AlbumAdapter : RecyclerView.Adapter<AlbumAdapter.AlbumViewHolder>() {
         holder.viewDataBinding.also {
             it.album = albums[position]
             Log.d("Debug onBindViewHolder", albums[position].toString())
+        }
+
+        holder.viewDataBinding.root.setOnClickListener {
+            Log.d("Debug onBindViewHolder", albums[position].toString())
+            val action =
+                AlbumFragmentDirections.actionNavAlbumsToNavDetailAlbum(albums[position])
+            holder.viewDataBinding.root.findNavController().navigate(action)
         }
     }
 

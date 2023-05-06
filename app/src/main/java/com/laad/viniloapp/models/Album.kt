@@ -1,5 +1,7 @@
 package com.laad.viniloapp.models
 
+import java.io.Serializable
+
 data class Album(
     val id: Int,
     val name: String,
@@ -8,4 +10,4 @@ data class Album(
     val releaseDate: String,
     val genre: String,
     val description: String,
-)
+) : Serializable
