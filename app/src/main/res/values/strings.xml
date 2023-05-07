@@ -20,4 +20,9 @@
 
     <string name="nav_view_role_collector">Coleccionista</string>
     <string name="nav_view_role_visitor">Visitante</string>
+
+    <string name="album_release">"Lanzamiento: "</string>
+    <string name="album_genre">"Género: "</string>
+    <string name="album_record_label">"Casa discográfica: "</string>
+
 </resources>

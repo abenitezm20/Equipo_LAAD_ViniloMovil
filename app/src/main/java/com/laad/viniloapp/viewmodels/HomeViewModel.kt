@@ -26,11 +26,11 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun consultaAlbum() {
-        albumsRepository.consultaAlbum({
-            _albums.postValue(it)
-        }, {
-            _eventNetworkError.value = true
-        })
+//        albumsRepository.consultaAlbum({
+//            _albums.postValue(it)
+//        }, {
+//            _eventNetworkError.value = true
+//        })
     }
 
 }

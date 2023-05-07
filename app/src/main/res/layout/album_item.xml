@@ -55,7 +55,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/Fondo"
                     android:paddingStart="5sp"
-                    android:text="@{album.description}"
+                    android:text="@{album.genre}"
                     android:textAlignment="textStart"
                     android:textColor="@color/Letra_lista"
                     android:textColorHighlight="@color/white"

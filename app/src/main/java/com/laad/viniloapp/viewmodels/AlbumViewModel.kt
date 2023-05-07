@@ -6,11 +6,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.laad.viniloapp.data.AlbumRepository
-import com.laad.viniloapp.data.network.ViniloServiceAdapter
 import com.laad.viniloapp.models.Album
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class AlbumViewModel(application: Application) :  AndroidViewModel(application) {
+class AlbumViewModel(application: Application) : AndroidViewModel(application) {
     private val _albums = MutableLiveData<List<Album>>()
     private val albumRepository = AlbumRepository(application)
 
@@ -32,13 +35,18 @@ class AlbumViewModel(application: Application) :  AndroidViewModel(application) 
     }
 
     private fun refreshDataFromNetwork() {
-        albumRepository.consultaAlbum({
-            _albums.postValue(it)
-            _eventNetworkError.value = false
-            _isNetworkErrorShown.value = false
-        },{
+        try {
+            viewModelScope.launch(Dispatchers.Default) {
+                withContext(Dispatchers.IO) {
+                    val data = albumRepository.consultaAlbum()
+                    _albums.postValue(data)
+                }
+                _eventNetworkError.postValue(false)
+                _isNetworkErrorShown.postValue(false)
+            }
+        } catch (e: Exception) {
             _eventNetworkError.value = true
-        })
+        }
     }
 
     fun onNetworkErrorShown() {
@@ -48,8 +56,7 @@ class AlbumViewModel(application: Application) :  AndroidViewModel(application) 
     class Factory(val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(AlbumViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return AlbumViewModel(app) as T
+                @Suppress("UNCHECKED_CAST") return AlbumViewModel(app) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }
