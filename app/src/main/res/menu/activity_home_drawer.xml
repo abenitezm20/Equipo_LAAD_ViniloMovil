@@ -20,5 +20,9 @@
             android:id="@+id/nav_collector"
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/menu_collector" />
+        <item
+            android:id="@+id/nav_list_collector"
+            android:icon="@drawable/side_nav_bar"
+            android:title="@string/menu_list_collector" />
     </group>
 </menu>
