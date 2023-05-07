@@ -16,10 +16,22 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [CollectorFragment.newInstance] factory method to
+ * Use the [ListCollectorFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class CollectorFragment : Fragment() {
+class ListCollectorFragment : Fragment() {
+    // TODO: Rename and change types of parameters
+    private var param1: String? = null
+    private var param2: String? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        //Controla para que cuando se le de atras retorne al mainActivity
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
+            findNavController().navigate(R.id.action_listCollectorFragment_to_mainActivity);
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,12 +47,12 @@ class CollectorFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment CollectorFragment.
+         * @return A new instance of fragment ListCollectorFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            CollectorFragment().apply {
+            ListCollectorFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
@@ -48,11 +60,5 @@ class CollectorFragment : Fragment() {
             }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        //Controla para que cuando se le de atras retorne al mainActivity
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
-            findNavController().navigate(R.id.action_nav_collector_to_mainActivity);
-        }
-    }
+
 }

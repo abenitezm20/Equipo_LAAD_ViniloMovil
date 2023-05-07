@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.ListCollectorFragment"
+    tools:context=".views.CollectorFragment"
     android:background="@color/Fondo"
     >
 
@@ -11,11 +11,10 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment"
+        android:text="Coming soon create album"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="20sp"
-        android:gravity="center"
-        />
+        android:gravity="center"/>
 
 </FrameLayout>

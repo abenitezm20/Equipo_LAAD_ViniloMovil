@@ -50,7 +50,7 @@
         android:id="@+id/nav_collector"
         android:name="com.laad.viniloapp.views.CollectorFragment"
         android:label="Crear Álbum"
-        tools:layout="@layout/fragment_collector">
+        tools:layout="@layout/fragment_create_album">
         <action
             android:id="@+id/action_nav_collector_to_mainActivity"
             app:destination="@id/mainActivity" />
@@ -65,7 +65,7 @@
         android:id="@+id/nav_list_collector"
         android:name="com.laad.viniloapp.views.ListCollectorFragment"
         android:label="Coleccionistas"
-        tools:layout="@layout/fragment_list_collector" >
+        tools:layout="@layout/fragment_collector" >
         <action
             android:id="@+id/action_listCollectorFragment_to_mainActivity"
             app:destination="@id/mainActivity" />
