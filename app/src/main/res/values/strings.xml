@@ -17,6 +17,7 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="menu_albums">Álbumes</string>
     <string name="menu_collector">Crear Álbum</string>
+    <string name="menu_list_collector">Coleccionistas</string>
 
     <string name="nav_view_role_collector">Coleccionista</string>
     <string name="nav_view_role_visitor">Visitante</string>
@@ -24,5 +25,9 @@
     <string name="album_release">"Lanzamiento: "</string>
     <string name="album_genre">"Género: "</string>
     <string name="album_record_label">"Casa discográfica: "</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

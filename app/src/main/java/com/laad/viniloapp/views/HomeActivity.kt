@@ -80,14 +80,17 @@ class HomeActivity : AppCompatActivity() {
         val albums = menu.findItem(R.id.nav_albums)
         val collector = menu.findItem(R.id.nav_collector)
         val artist = menu.findItem(R.id.nav_artist)
+        val listCollector = menu.findItem(R.id.nav_list_collector)
         albums.isVisible = true
         collector.isVisible=true
         artist.isVisible=true
+        listCollector.isVisible=true
         if(role == AppRole.VISITOR.value){
             collector.isVisible = false
         }else if (role == AppRole.COLLECTOR.value){
-            albums.isVisible = true
-            artist.isVisible = true
+            albums.isVisible = false
+            artist.isVisible = false
+            listCollector.isVisible = false
         }
     }
 }
