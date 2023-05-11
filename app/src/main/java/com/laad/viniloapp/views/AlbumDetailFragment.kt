@@ -22,8 +22,7 @@ class AlbumDetailFragment : Fragment() {
     private val args: AlbumDetailFragmentArgs by navArgs()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentAlbumDetailBinding.inflate(inflater, container, false)
         return binding.root
@@ -36,23 +35,18 @@ class AlbumDetailFragment : Fragment() {
         bindCover(album)
         binding.detailAlbumName.text = album.name
         binding.detailAlbumRelease.text =
-            getString(R.string.album_release) + Utils.formatDate(album.releaseDate)
-        binding.detailAlbumGenre.text = getString(R.string.album_genre) + album.genre
+            getString(R.string.album_release, Utils.formatDate(album.releaseDate))
+        binding.detailAlbumGenre.text = getString(R.string.album_genre, album.genre)
         binding.detailAlbumRecordLabel.text =
-            getString(R.string.album_record_label) + album.recordLabel
+            getString(R.string.album_record_label, album.recordLabel)
         binding.detailAlbumDescription.text = album.description
-
     }
 
-    fun bindCover(album: Album) {
-        Glide.with(this)
-            .load(album.cover.toUri().buildUpon().scheme("https").build())
-            .apply(
-                RequestOptions()
-                    .placeholder(R.drawable.loading_image)
-                    .error(R.drawable.ic_broken_image)
-            )
-            .into(binding.albumCover)
+    private fun bindCover(album: Album) {
+        Glide.with(this).load(album.cover.toUri().buildUpon().scheme("https").build()).apply(
+            RequestOptions().placeholder(R.drawable.loading_image)
+                .error(R.drawable.ic_broken_image)
+        ).into(binding.albumCover)
     }
 
 }

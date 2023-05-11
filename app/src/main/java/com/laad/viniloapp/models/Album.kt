@@ -1,9 +1,12 @@
 package com.laad.viniloapp.models
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.io.Serializable
 
+@Entity(tableName = "cached_albums")
 data class Album(
-    val id: Int,
+    @PrimaryKey val id: Int,
     val name: String,
     val cover: String,
     val recordLabel: String,

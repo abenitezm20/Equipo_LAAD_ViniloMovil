@@ -22,10 +22,9 @@
     <string name="nav_view_role_collector">Coleccionista</string>
     <string name="nav_view_role_visitor">Visitante</string>
 
-    <string name="album_release">"Lanzamiento: "</string>
-    <string name="album_genre">"Género: "</string>
-    <string name="album_record_label">"Casa discográfica: "</string>
-
+    <string name="album_release">"Lanzamiento: %s"</string>
+    <string name="album_genre">"Género: %s"</string>
+    <string name="album_record_label">"Casa discográfica: %s"</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
