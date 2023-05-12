@@ -19,7 +19,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [CollectorFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class CollectorFragment : Fragment() {
+class CreateAlbumFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -52,7 +52,7 @@ class CollectorFragment : Fragment() {
         super.onCreate(savedInstanceState)
         //Controla para que cuando se le de atras retorne al mainActivity
         val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
-            findNavController().navigate(R.id.action_nav_collector_to_mainActivity);
+            findNavController().navigate(R.id.action_nav_createalbum_to_mainActivity);
         }
     }
 }
