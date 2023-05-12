@@ -80,4 +80,9 @@ class AlbumFragment : Fragment() {
             findNavController().navigate(R.id.action_nav_albums_to_mainActivity);
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.refreshDataFromNetwork()
+    }
 }
