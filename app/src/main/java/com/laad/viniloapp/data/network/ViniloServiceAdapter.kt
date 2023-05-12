@@ -78,13 +78,17 @@ class ViniloServiceAdapter constructor(context: Context) {
 
                     list.add(
                         i, Artist(
+                            id = item.getInt("id"),
                             name = "Nombre: " + item.getString("name"),
                             image = item.getString("image"),
+                            description = item.getString("description"),
                             birthDate = "Fecha de nacimiento: " + dFormat.format(
                                 dOriginal.parse(
                                     item.getString("birthDate")
                                 )
-                            )
+                            ),
+                            creationDate = dFormat.format( dOriginal.parse( item.getString("creationDate"))),
+                            type = item.getString("type")
                         )
                     )
                 }

@@ -51,7 +51,7 @@ public class TestListarAlbums {
 
         Thread.sleep(1000)
         val collectorBtn =
-            onView(allOf(withId(R.id.collector_home_button), ViewMatchers.isDisplayed()))
+            onView(allOf(withId(R.id.visitor_home_button), ViewMatchers.isDisplayed()))
         collectorBtn.perform(click())
 
         val menu = onView(allOf(withId(R.id.drawer_layout)))

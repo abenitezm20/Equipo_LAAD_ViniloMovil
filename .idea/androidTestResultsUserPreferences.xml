@@ -38,6 +38,7 @@
               <option name="preferredColumnWidths">
                 <map>
                   <entry key="Duration" value="90" />
+                  <entry key="Pixel_4_API_24" value="120" />
                   <entry key="Pixel_XL_API_30" value="120" />
                   <entry key="Tests" value="360" />
                 </map>
@@ -65,9 +66,23 @@
                 <map>
                   <entry key="2107294910HA2VQ6" value="120" />
                   <entry key="Duration" value="90" />
+                  <entry key="Pixel_4_API_24" value="120" />
                   <entry key="Pixel_XL_API_30" value="120" />
                   <entry key="Tests" value="360" />
                   <entry key="realme&#10; RMX3263" value="120" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
+        <entry key="34161330">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="Duration" value="90" />
+                  <entry key="Pixel_XL_API_30" value="120" />
+                  <entry key="Tests" value="360" />
                 </map>
               </option>
             </AndroidTestResultsTableState>
