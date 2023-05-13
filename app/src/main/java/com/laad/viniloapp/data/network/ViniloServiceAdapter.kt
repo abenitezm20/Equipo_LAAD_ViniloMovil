@@ -10,6 +10,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.laad.viniloapp.models.Album
 import com.laad.viniloapp.models.Artist
+import com.laad.viniloapp.models.Collector
 import org.json.JSONArray
 import java.text.SimpleDateFormat
 import kotlin.coroutines.resume
@@ -96,6 +97,34 @@ class ViniloServiceAdapter constructor(context: Context) {
             }, { onError(it) })
         )
     }
+
+    fun getCollector(
+        onComplete: (resp: List<Collector>) -> Unit, onError: (error: VolleyError) -> Unit
+    ) {
+        requestQueue.add(
+            getRequest("collectors", { response ->
+                val resp = JSONArray(response)
+                val list = mutableListOf<Collector>()
+
+
+                for (i in 0 until resp.length()) {
+                    var item = resp.getJSONObject(i)
+
+                    list.add(
+                        i, Collector(
+                            id = item.getInt("id"),
+                            name = item.getString("name"),
+                            telephone = item.getString("telephone"),
+                            email = item.getString("email")
+                        )
+                    )
+                }
+                onComplete(list)
+            }, { onError(it) })
+        )
+    }
+
+
 
     private fun getRequest(
         path: String,
