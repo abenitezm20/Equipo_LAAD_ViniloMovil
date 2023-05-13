@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable name="album" type="com.laad.viniloapp.models.Album"/>
@@ -34,16 +33,17 @@
                     android:layout_height="wrap_content"
                     android:background="@color/Fondo"
                     android:paddingStart="5sp"
+                    android:paddingEnd="5sp"
+                    android:paddingBottom="2pt"
                     android:textColor="@color/Azul"
-                    android:textSize="20sp"
-                    android:paddingBottom="2pt"/>
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/textView6"
                     android:layout_width="match_parent"
                     android:layout_height="38dp"
-                    android:background="@color/Fondo"
                     android:paddingStart="5sp"
+                    android:paddingEnd="5sp"
                     android:paddingBottom="2pt"
                     android:text="@{album.name}"
                     android:textColor="@color/Azul"
@@ -53,15 +53,14 @@
                     android:id="@+id/textView5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/Fondo"
                     android:paddingStart="5sp"
+                    android:paddingEnd="5sp"
                     android:text="@{album.genre}"
                     android:textAlignment="textStart"
                     android:textColor="@color/Letra_lista"
                     android:textColorHighlight="@color/white"
                     android:textDirection="inherit"
-                    android:textSize="15sp"
-                    android:justificationMode="inter_word"/>
+                    android:textSize="15sp" />
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
