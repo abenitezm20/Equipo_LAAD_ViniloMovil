@@ -31,7 +31,6 @@
                     android:id="@+id/textView9"
                     android:layout_width="match_parent"
                     android:layout_height="38dp"
-                    android:background="@color/Fondo"
                     android:text="@{collector.name}"
                     android:textColor="@color/Azul"
                     android:textSize="20sp" />
@@ -40,7 +39,6 @@
                     android:id="@+id/textView10"
                     android:layout_width="match_parent"
                     android:layout_height="38dp"
-                    android:background="@color/Fondo"
                     android:text="@{collector.email}"
                     android:textAlignment="textStart"
                     android:textColor="@color/Letra_lista"
@@ -51,7 +49,6 @@
                     android:id="@+id/textView11"
                     android:layout_width="match_parent"
                     android:layout_height="38dp"
-                    android:background="@color/Fondo"
                     android:text="@{collector.telephone}"
                     android:textAlignment="textStart"
                     android:textColor="@color/Letra_lista"
