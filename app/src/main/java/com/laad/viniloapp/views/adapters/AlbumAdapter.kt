@@ -20,7 +20,10 @@ class AlbumAdapter : RecyclerView.Adapter<AlbumAdapter.AlbumViewHolder>() {
             notifyDataSetChanged()
         }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): AlbumViewHolder {
         val withDataBinding: AlbumItemBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context), AlbumViewHolder.LAYOUT, parent, false
         )

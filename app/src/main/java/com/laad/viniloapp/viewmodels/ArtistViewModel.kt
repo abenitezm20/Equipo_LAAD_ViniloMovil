@@ -6,12 +6,19 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.laad.viniloapp.data.ArtistRepository
+import com.laad.viniloapp.data.database.VinylRoomDatabase
 import com.laad.viniloapp.models.Artist
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ArtistViewModel(application: Application) : AndroidViewModel(application) {
     private val _artist = MutableLiveData<List<Artist>>()
-    private val artistRepository = ArtistRepository(application)
+    private val artistRepository = ArtistRepository(
+        application, VinylRoomDatabase.getDatabase(application.applicationContext).artistDao()
+    )
 
     val artists: LiveData<List<Artist>>
         get() = _artist
@@ -30,14 +37,19 @@ class ArtistViewModel(application: Application) : AndroidViewModel(application) 
         refreshDataFromNetwork()
     }
 
-    private fun refreshDataFromNetwork() {
-        artistRepository.consultaArtist({
-            _artist.postValue(it)
-            _eventNetworkError.value = false
-            _isNetworkErrorShown.value = false
-        }, {
+    public fun refreshDataFromNetwork() {
+        try {
+            viewModelScope.launch(Dispatchers.Default) {
+                withContext(Dispatchers.IO) {
+                    val data = artistRepository.consultaArtist()
+                    _artist.postValue(data)
+                }
+                _eventNetworkError.postValue(false)
+                _isNetworkErrorShown.postValue(false)
+            }
+        } catch (e: Exception) {
             _eventNetworkError.value = true
-        })
+        }
     }
 
     fun onNetworkErrorShown() {

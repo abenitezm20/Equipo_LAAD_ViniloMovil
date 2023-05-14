@@ -12,6 +12,5 @@ data class Artist(
     val image:String,
     val description:String,
     val birthDate:String,
-    val creationDate:String,
-    val type:String
+    val creationDate:String
 ) : Serializable

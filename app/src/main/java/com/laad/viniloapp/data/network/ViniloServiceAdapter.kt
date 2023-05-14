@@ -63,9 +63,8 @@ class ViniloServiceAdapter constructor(context: Context) {
         )
     }
 
-    fun getArtists(
-        onComplete: (resp: List<Artist>) -> Unit, onError: (error: VolleyError) -> Unit
-    ) {
+    suspend fun getArtists() = suspendCoroutine<List<Artist>> { cont ->
+        Log.d("ViniloServiceAdapter", "Consultando artistas")
         val dOriginal = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
         val dFormat = SimpleDateFormat("yyyy-MM-dd")
         requestQueue.add(
@@ -77,24 +76,28 @@ class ViniloServiceAdapter constructor(context: Context) {
                 for (i in 0 until resp.length()) {
                     var item = resp.getJSONObject(i)
 
-                    list.add(
+                    var birthD: String = ""
+                    var createD: String = ""
+
+                    if (item.has("birthDate"))
+                        birthD = dFormat.format(dOriginal.parse(item.getString("birthDate")))
+                    if (item.has("creationDate"))
+                        createD = dFormat.format(dOriginal.parse(item.getString("creationDate")))
+
+                     list.add(
                         i, Artist(
                             id = item.getInt("id"),
                             name = "Nombre: " + item.getString("name"),
                             image = item.getString("image"),
                             description = item.getString("description"),
-                            birthDate = "Fecha de nacimiento: " + dFormat.format(
-                                dOriginal.parse(
-                                    item.getString("birthDate")
-                                )
-                            ),
-                            creationDate = dFormat.format( dOriginal.parse( item.getString("creationDate"))),
-                            type = item.getString("type")
+                            birthDate = birthD,
+                            creationDate = createD
                         )
                     )
                 }
-                onComplete(list)
-            }, { onError(it) })
+                Log.d("ViniloServiceAdapter", list.size.toString() + " artistas consultados")
+                cont.resume(list)
+            }, { cont.resumeWithException(it) })
         )
     }
 
