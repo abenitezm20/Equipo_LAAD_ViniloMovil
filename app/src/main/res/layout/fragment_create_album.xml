@@ -5,12 +5,11 @@
     android:layout_height="match_parent"
     tools:context=".views.CreateAlbumFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="Coming soon create album"
+        android:text="@string/text_create_album"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="20sp" />
