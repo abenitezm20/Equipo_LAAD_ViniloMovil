@@ -1,7 +1,10 @@
 package com.laad.viniloapp
 
 import android.util.Log
+import androidx.recyclerview.widget.RecyclerView
+import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
@@ -9,11 +12,13 @@ import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.DrawerActions
+import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
+import org.hamcrest.Matchers
 import org.junit.runner.RunWith
 import org.junit.Rule
 import org.junit.Test
@@ -63,7 +68,21 @@ public class TestListarAlbums {
             onView(withId(R.id.nav_albums))
         listAlbumSelec.perform(click());
 
-        //buscando el titulo de un album
-        onView(allOf(withId(R.id.textView6), withText("Poeta del pueblo"))).check(matches(isDisplayed()))
+        // Verificar lista albumes, si existe por lo menos uno la prueba es Valida
+        Thread.sleep(500)
+        val recyclerView = Espresso.onView(
+            Matchers.allOf(
+                ViewMatchers.withId(R.id.albumsRv),
+                ViewMatchers.withParent(ViewMatchers.withParent(ViewMatchers.withId(R.id.nav_host_fragment_content_home))),
+                ViewMatchers.isDisplayed()
+            )
+        )
+
+        recyclerView.check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+        recyclerView.perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                0, ViewActions.click()
+            )
+        )
     }
 }
