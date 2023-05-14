@@ -12,11 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="150sp"
         android:layout_margin="10sp"
-        android:background="@color/Gris"
         android:orientation="vertical"
-        android:outlineSpotShadowColor="@color/Gris"
-        android:paddingTop="5dp"
-        app:strokeWidth="2dp">
+        android:paddingTop="5dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -93,7 +90,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingTop="170sp">
+        android:layout_marginTop="180sp">
 
         <TextView
             android:id="@+id/title_performers_collector"

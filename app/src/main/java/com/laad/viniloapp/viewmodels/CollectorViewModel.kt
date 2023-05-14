@@ -6,14 +6,23 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.laad.viniloapp.data.CollectorRepository
-import com.laad.viniloapp.models.Collector
+import com.laad.viniloapp.data.database.VinylRoomDatabase
+import com.laad.viniloapp.models.CollectorPerformers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class CollectorViewModel(application: Application) : AndroidViewModel(application) {
-    private val _collector = MutableLiveData<List<Collector>>()
-    private val collectorRepository = CollectorRepository(application)
+    private val _collector = MutableLiveData<List<CollectorPerformers>>()
+    private val collectorRepository = CollectorRepository(
+        application,
+        VinylRoomDatabase.getDatabase(application.applicationContext).collectorDao(),
+        VinylRoomDatabase.getDatabase(application.applicationContext).FavoritePerformersDao(),
+    )
 
-    val collectors: LiveData<List<Collector>>
+    val collectors: LiveData<List<CollectorPerformers>>
         get() = _collector
 
     private var _eventNetworkError = MutableLiveData<Boolean>(false)
@@ -30,14 +39,20 @@ class CollectorViewModel(application: Application) : AndroidViewModel(applicatio
         refreshDataFromNetwork()
     }
 
-    private fun refreshDataFromNetwork() {
-        collectorRepository.consultaCollector({
-            _collector.postValue(it)
-            _eventNetworkError.value = false
-            _isNetworkErrorShown.value = false
-        }, {
+    fun refreshDataFromNetwork() {
+        try {
+            viewModelScope.launch(Dispatchers.Default) {
+                withContext(Dispatchers.IO) {
+                    val data = collectorRepository.consultaCollector()
+                    _collector.postValue(data)
+                }
+                _eventNetworkError.postValue(false)
+                _isNetworkErrorShown.postValue(false)
+            }
+
+        } catch (e: Exception) {
             _eventNetworkError.value = true
-        })
+        }
     }
 
     fun onNetworkErrorShown() {

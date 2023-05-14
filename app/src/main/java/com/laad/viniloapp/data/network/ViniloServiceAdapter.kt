@@ -5,14 +5,12 @@ import android.util.Log
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
-import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.laad.viniloapp.models.Album
 import com.laad.viniloapp.models.Artist
 import com.laad.viniloapp.models.Collector
-import com.laad.viniloapp.models.CollectorAlbums
-import com.laad.viniloapp.models.Comments
+import com.laad.viniloapp.models.CollectorPerformers
 import com.laad.viniloapp.models.FavoritePerformers
 import com.laad.viniloapp.utilities.Album_Status
 import org.json.JSONArray
@@ -88,7 +86,7 @@ class ViniloServiceAdapter constructor(context: Context) {
                     if (item.has("creationDate"))
                         createD = dFormat.format(dOriginal.parse(item.getString("creationDate")))
 
-                     list.add(
+                    list.add(
                         i, Artist(
                             id = item.getInt("id"),
                             name = "Nombre: " + item.getString("name"),
@@ -105,36 +103,34 @@ class ViniloServiceAdapter constructor(context: Context) {
         )
     }
 
-    fun getCollector(
-        onComplete: (resp: List<Collector>) -> Unit, onError: (error: VolleyError) -> Unit
-    ) {
+    suspend fun getCollector() = suspendCoroutine<List<CollectorPerformers>> { cont ->
+        Log.d("ViniloServiceAdapter", "Consultando coleccionistas")
+
         requestQueue.add(
             getRequest("collectors", { response ->
                 val resp = JSONArray(response)
-                val list = mutableListOf<Collector>()
+                val list = mutableListOf<CollectorPerformers>()
 
 
                 for (i in 0 until resp.length()) {
                     val item = resp.getJSONObject(i)
 
                     list.add(
-                        i, Collector(
-                            id_collector = item.getInt("id"),
-                            name = item.getString("name"),
-                            telephone = item.getString("telephone"),
-                            email = item.getString("email"),
-                            comments= getComments(item.getString("comments")),
-                            favoritePerformers=getPerformers(item.getString("favoritePerformers")),
-                            collectorAlbums=getCollectorAlbums(item.getString("collectorAlbums"))
+                        i, CollectorPerformers(
+                            Collector(
+                                id_collector = item.getInt("id"),
+                                name = item.getString("name"),
+                                telephone = item.getString("telephone"),
+                                email = item.getString("email"),
+                            ), getPerformers(item.getInt("id"), item.getString("favoritePerformers"))
                         )
                     )
                 }
-                onComplete(list)
-            }, { onError(it) })
+                cont.resume(list)
+            }, { cont.resumeWithException(it) })
         )
+
     }
-
-
 
     private fun getRequest(
         path: String,
@@ -144,24 +140,7 @@ class ViniloServiceAdapter constructor(context: Context) {
         return StringRequest(Request.Method.GET, BASE_URL + path, responseListener, errorListener)
     }
 
-    private fun getComments(jsonComments:String):List<Comments>{
-        val datos = JSONArray(jsonComments)
-        val list = mutableListOf<Comments>()
-
-        for (i in 0 until datos.length()) {
-            val item = datos.getJSONObject(i)
-
-            list.add(
-                i, Comments(
-                    Id_coments=item.getInt("id"),
-                    description=item.getString("description"),
-                    rating=item.getInt("rating")
-                )
-            )
-        }
-        return list
-    }
-    private fun getPerformers(jsonPerformers:String):List<FavoritePerformers>{
+    private fun getPerformers(collectorId: Int, jsonPerformers: String): List<FavoritePerformers> {
         val datos = JSONArray(jsonPerformers)
         val list = mutableListOf<FavoritePerformers>()
 
@@ -170,38 +149,21 @@ class ViniloServiceAdapter constructor(context: Context) {
 
             list.add(
                 i, FavoritePerformers(
-                    id_favorite_performers=item.getInt("id"),
-                    name=item.getString("name"),
-                    image=item.getString("image"),
-                    description=item.getString("description")
+                    id_favorite_performers = item.getInt("id"),
+                    name = item.getString("name"),
+                    image = item.getString("image"),
+                    description = item.getString("description"),
+                    collectorId = collectorId
                 )
             )
         }
         return list
     }
 
-    private fun getCollectorAlbums(jsonCollectorAlbum:String):List<CollectorAlbums>{
-        val datos = JSONArray(jsonCollectorAlbum)
-        val list = mutableListOf<CollectorAlbums>()
-
-        for (i in 0 until datos.length()) {
-            val item = datos.getJSONObject(i)
-
-            list.add(
-                i, CollectorAlbums(
-                    id_collector_album=item.getInt("id"),
-                    price=item.getDouble("price"),
-                    status= getAlbumStatus(item.getString("status"))
-                )
-            )
-        }
-        return list
-    }
-
-    private fun getAlbumStatus(status:String):Album_Status{
-        if(status==Album_Status.ACTIVE.value)
+    private fun getAlbumStatus(status: String): Album_Status {
+        if (status == Album_Status.ACTIVE.value)
             return Album_Status.ACTIVE
-        if(status==Album_Status.INACTIVE.value)
+        if (status == Album_Status.INACTIVE.value)
             return Album_Status.INACTIVE
         return Album_Status.INACTIVE
     }
