@@ -11,13 +11,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="150sp"
-        android:orientation="vertical"
-        android:background="@color/Gris"
         android:layout_margin="10sp"
-        android:paddingTop="5dp"
-        app:strokeWidth="2dp"
+        android:background="@color/Gris"
+        android:orientation="vertical"
         android:outlineSpotShadowColor="@color/Gris"
-        >
+        android:paddingTop="5dp"
+        app:strokeWidth="2dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -25,11 +24,10 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:paddingTop="3dp"
+            android:text="@string/name_collector"
             android:textAlignment="textStart"
             android:textColor="@color/Azul"
-            android:textSize="13sp"
-            android:text="@string/name_collector"
-            />
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/name_detail_collector"
@@ -38,11 +36,10 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:paddingTop="3dp"
+            android:text="nombre_colleccionista"
             android:textAlignment="textStart"
             android:textColor="@color/white"
-            android:textSize="14sp"
-            android:text="nombre_colleccionista"
-            />
+            android:textSize="14sp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -50,11 +47,10 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:paddingTop="3dp"
+            android:text="@string/tel_collector"
             android:textAlignment="textStart"
             android:textColor="@color/Azul"
-            android:textSize="13sp"
-            android:text="@string/tel_collector"
-            />
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/tel_detail_collector"
@@ -63,10 +59,10 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:paddingTop="3dp"
+            android:text="tel_colleccionista"
             android:textAlignment="textStart"
             android:textColor="@color/white"
-            android:textSize="14sp"
-            android:text="tel_colleccionista"/>
+            android:textSize="14sp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -74,11 +70,10 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:paddingTop="3dp"
+            android:text="@string/email_collector"
             android:textAlignment="textStart"
             android:textColor="@color/Azul"
-            android:textSize="13sp"
-            android:text="@string/email_collector"
-            />
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/email_detail_collector"
@@ -87,44 +82,40 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:paddingTop="3dp"
+            android:text="email_colleccionista"
             android:textAlignment="textStart"
             android:textColor="@color/white"
-            android:textSize="14sp"
-            android:text="email_colleccionista" />
+            android:textSize="14sp" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="1000sp"
-        android:paddingTop="170sp"
-
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="170sp">
 
         <TextView
             android:id="@+id/title_performers_collector"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:paddingTop="15dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
+            android:paddingTop="15dp"
             android:text="@string/title_preformers_collector"
             android:textAlignment="textStart"
             android:textColor="@color/white"
             android:textSize="15sp"
             tools:visibility="visible" />
 
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/lv_performers_collector"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="380dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:background="@color/Fondo"
-            tools:listitem="@layout/list_performers_collector" >
-        </androidx.recyclerview.widget.RecyclerView>
-
+            tools:listitem="@layout/list_performers_collector" />
 
     </LinearLayout>
 
