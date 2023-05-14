@@ -5,16 +5,12 @@
     android:layout_height="match_parent"
     tools:context=".views.CollectorFragment">
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/CollectorRv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/Fondo"
+        android:layout_margin="10dp"
         tools:listitem="@layout/collector_item" />
 
 </FrameLayout>

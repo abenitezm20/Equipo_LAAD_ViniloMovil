@@ -1,13 +1,17 @@
 package com.laad.viniloapp.views.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.laad.viniloapp.R
 import com.laad.viniloapp.databinding.CollectorItemBinding
 import com.laad.viniloapp.models.Collector
+import com.laad.viniloapp.views.AlbumFragmentDirections
+import com.laad.viniloapp.views.CollectorFragmentDirections
 
 class CollectorAdapter : RecyclerView.Adapter<CollectorAdapter.CollectorViewHolder>() {
 
@@ -33,8 +37,14 @@ class CollectorAdapter : RecyclerView.Adapter<CollectorAdapter.CollectorViewHold
         holder.viewDataBinding.also {
             it.collector = collectors[position]
         }
-        holder.viewDataBinding.root.setOnClickListener {}
+        holder.viewDataBinding.root.setOnClickListener {
+            Log.d("Debug onBindViewHolder", collectors[position].toString())
+            val action =
+                CollectorFragmentDirections.actionNavCollectorToCollectorDetailFragment(collectors[position])
+            holder.viewDataBinding.root.findNavController().navigate(action)
+        }
     }
+
 
     override fun getItemCount(): Int {
         return collectors.size

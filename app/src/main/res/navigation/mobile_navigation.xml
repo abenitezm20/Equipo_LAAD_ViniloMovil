@@ -69,5 +69,17 @@
         <action
             android:id="@+id/action_collectorFragment_to_mainActivity"
             app:destination="@id/mainActivity" />
+        <action
+            android:id="@+id/action_nav_collector_to_collectorDetailFragment"
+            app:destination="@id/nav_collector_detail" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_collector_detail"
+        android:name="com.laad.viniloapp.views.CollectorDetailFragment"
+        android:label="Detalle Coleccionista"
+        tools:layout="@layout/collector_detail_fragment">
+    <argument
+        android:name="collector"
+        app:argType="com.laad.viniloapp.models.Collector" />
     </fragment>
 </navigation>

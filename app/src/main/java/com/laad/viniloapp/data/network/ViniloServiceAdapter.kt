@@ -11,6 +11,10 @@ import com.android.volley.toolbox.Volley
 import com.laad.viniloapp.models.Album
 import com.laad.viniloapp.models.Artist
 import com.laad.viniloapp.models.Collector
+import com.laad.viniloapp.models.CollectorAlbums
+import com.laad.viniloapp.models.Comments
+import com.laad.viniloapp.models.FavoritePerformers
+import com.laad.viniloapp.utilities.Album_Status
 import org.json.JSONArray
 import java.text.SimpleDateFormat
 import kotlin.coroutines.resume
@@ -74,7 +78,7 @@ class ViniloServiceAdapter constructor(context: Context) {
 
 
                 for (i in 0 until resp.length()) {
-                    var item = resp.getJSONObject(i)
+                    val item = resp.getJSONObject(i)
 
                     var birthD: String = ""
                     var createD: String = ""
@@ -111,14 +115,17 @@ class ViniloServiceAdapter constructor(context: Context) {
 
 
                 for (i in 0 until resp.length()) {
-                    var item = resp.getJSONObject(i)
+                    val item = resp.getJSONObject(i)
 
                     list.add(
                         i, Collector(
-                            id = item.getInt("id"),
+                            id_collector = item.getInt("id"),
                             name = item.getString("name"),
                             telephone = item.getString("telephone"),
-                            email = item.getString("email")
+                            email = item.getString("email"),
+                            comments= getComments(item.getString("comments")),
+                            favoritePerformers=getPerformers(item.getString("favoritePerformers")),
+                            collectorAlbums=getCollectorAlbums(item.getString("collectorAlbums"))
                         )
                     )
                 }
@@ -135,6 +142,68 @@ class ViniloServiceAdapter constructor(context: Context) {
         errorListener: Response.ErrorListener
     ): StringRequest {
         return StringRequest(Request.Method.GET, BASE_URL + path, responseListener, errorListener)
+    }
+
+    private fun getComments(jsonComments:String):List<Comments>{
+        val datos = JSONArray(jsonComments)
+        val list = mutableListOf<Comments>()
+
+        for (i in 0 until datos.length()) {
+            val item = datos.getJSONObject(i)
+
+            list.add(
+                i, Comments(
+                    Id_coments=item.getInt("id"),
+                    description=item.getString("description"),
+                    rating=item.getInt("rating")
+                )
+            )
+        }
+        return list
+    }
+    private fun getPerformers(jsonPerformers:String):List<FavoritePerformers>{
+        val datos = JSONArray(jsonPerformers)
+        val list = mutableListOf<FavoritePerformers>()
+
+        for (i in 0 until datos.length()) {
+            val item = datos.getJSONObject(i)
+
+            list.add(
+                i, FavoritePerformers(
+                    id_favorite_performers=item.getInt("id"),
+                    name=item.getString("name"),
+                    image=item.getString("image"),
+                    description=item.getString("description")
+                )
+            )
+        }
+        return list
+    }
+
+    private fun getCollectorAlbums(jsonCollectorAlbum:String):List<CollectorAlbums>{
+        val datos = JSONArray(jsonCollectorAlbum)
+        val list = mutableListOf<CollectorAlbums>()
+
+        for (i in 0 until datos.length()) {
+            val item = datos.getJSONObject(i)
+
+            list.add(
+                i, CollectorAlbums(
+                    id_collector_album=item.getInt("id"),
+                    price=item.getDouble("price"),
+                    status= getAlbumStatus(item.getString("status"))
+                )
+            )
+        }
+        return list
+    }
+
+    private fun getAlbumStatus(status:String):Album_Status{
+        if(status==Album_Status.ACTIVE.value)
+            return Album_Status.ACTIVE
+        if(status==Album_Status.INACTIVE.value)
+            return Album_Status.INACTIVE
+        return Album_Status.INACTIVE
     }
 
 }

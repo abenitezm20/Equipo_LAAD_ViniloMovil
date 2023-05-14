@@ -18,4 +18,13 @@
     <string name="album_record_label">"Casa discográfica: %s"</string>
     <string name="menu_artistas">Artistas</string>
     <string name="text_create_album">Coming soon create album</string>
+    <string name="title_preformers_collector">Artistas Favoritos</string>
+    <string name="img_preformers_collector">Imagen Performers</string>
+    <string name="name_collector">Nombre</string>
+    <string name="tel_collector">Telefono</string>
+    <string name="email_collector">Email</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
