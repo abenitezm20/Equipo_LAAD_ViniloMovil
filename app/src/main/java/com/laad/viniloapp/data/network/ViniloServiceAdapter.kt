@@ -164,10 +164,9 @@ class ViniloServiceAdapter constructor(context: Context) {
             list.add(
                 i, FavoritePerformers(
                     id_favorite_performers=item.getInt("id"),
-                    name=item.getString("name")
-                    /*,image=item.getString("image"),
-                    description=item.getString("description"),
-                    creationDate=item.getString("creationDate")*/
+                    name=item.getString("name"),
+                    image=item.getString("image"),
+                    description=item.getString("description")
                 )
             )
         }
