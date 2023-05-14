@@ -5,17 +5,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.laad.viniloapp.R
-import com.laad.viniloapp.databinding.CollectorItemBinding
-import com.laad.viniloapp.models.Collector
-import com.laad.viniloapp.views.AlbumFragmentDirections
-import com.laad.viniloapp.views.CollectorFragmentDirections
+import com.laad.viniloapp.databinding.PerformersCollectorItemBinding
+import com.laad.viniloapp.models.FavoritePerformers
 
-class CollectorAdapter : RecyclerView.Adapter<CollectorAdapter.CollectorViewHolder>() {
+class CollectorPerformersAdapter() : RecyclerView.Adapter<CollectorPerformersAdapter.CollectorViewHolder>() {
 
-    var collectors :List<Collector> = emptyList()
+    var favoritePerformers :List<FavoritePerformers> = emptyList()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -25,7 +22,7 @@ class CollectorAdapter : RecyclerView.Adapter<CollectorAdapter.CollectorViewHold
         parent: ViewGroup,
         viewType: Int
     ): CollectorViewHolder {
-        val withDataBinding: CollectorItemBinding = DataBindingUtil.inflate(
+        val withDataBinding: PerformersCollectorItemBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
             CollectorViewHolder.LAYOUT,
             parent,
@@ -35,26 +32,23 @@ class CollectorAdapter : RecyclerView.Adapter<CollectorAdapter.CollectorViewHold
 
     override fun onBindViewHolder(holder: CollectorViewHolder, position: Int) {
         holder.viewDataBinding.also {
-            it.collector = collectors[position]
+            it.favoritePerformers = favoritePerformers[position]
+            Log.d("Debug onBindViewHolder Album", favoritePerformers[position].toString())
         }
         holder.viewDataBinding.root.setOnClickListener {
-            Log.d("Debug onBindViewHolder", collectors[position].toString())
-            val action =
-                CollectorFragmentDirections.actionNavCollectorToCollectorDetailFragment(collectors[position])
-            holder.viewDataBinding.root.findNavController().navigate(action)
         }
     }
 
 
     override fun getItemCount(): Int {
-        return collectors.size
+        return favoritePerformers.size
     }
 
-    class CollectorViewHolder(val viewDataBinding: CollectorItemBinding) :
+    class CollectorViewHolder(val viewDataBinding: PerformersCollectorItemBinding) :
         RecyclerView.ViewHolder(viewDataBinding.root) {
         companion object {
             @LayoutRes
-            val LAYOUT = R.layout.collector_item
+            val LAYOUT = R.layout.list_performers_collector
         }
     }
 }
