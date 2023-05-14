@@ -17,4 +17,5 @@
     <string name="album_genre">"Género: %s"</string>
     <string name="album_record_label">"Casa discográfica: %s"</string>
     <string name="menu_artistas">Artistas</string>
+    <string name="text_create_album">Coming soon create album</string>
 </resources>

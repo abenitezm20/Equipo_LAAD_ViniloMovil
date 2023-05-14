@@ -24,16 +24,16 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     val albums: LiveData<List<Album>>
         get() = _albums
 
-    init {
-        consultaAlbum()
-    }
+//    init {
+//        consultaAlbum()
+//    }
 
-    private fun consultaAlbum() {
+//    private fun consultaAlbum() {
 //        albumsRepository.consultaAlbum({
 //            _albums.postValue(it)
 //        }, {
 //            _eventNetworkError.value = true
 //        })
-    }
+//   }
 
 }
