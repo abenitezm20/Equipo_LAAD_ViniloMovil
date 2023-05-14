@@ -10,12 +10,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.laad.viniloapp.R
 import com.laad.viniloapp.databinding.CollectorItemBinding
 import com.laad.viniloapp.models.Collector
+import com.laad.viniloapp.models.CollectorPerformers
 import com.laad.viniloapp.views.AlbumFragmentDirections
 import com.laad.viniloapp.views.CollectorFragmentDirections
 
 class CollectorAdapter : RecyclerView.Adapter<CollectorAdapter.CollectorViewHolder>() {
 
-    var collectors :List<Collector> = emptyList()
+    var collectors :List<CollectorPerformers> = emptyList()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -35,7 +36,7 @@ class CollectorAdapter : RecyclerView.Adapter<CollectorAdapter.CollectorViewHold
 
     override fun onBindViewHolder(holder: CollectorViewHolder, position: Int) {
         holder.viewDataBinding.also {
-            it.collector = collectors[position]
+            it.collector = collectors[position].collector
         }
         holder.viewDataBinding.root.setOnClickListener {
             Log.d("Debug onBindViewHolder", collectors[position].toString())

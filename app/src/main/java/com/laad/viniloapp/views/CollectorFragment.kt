@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.laad.viniloapp.R
 import com.laad.viniloapp.databinding.FragmentCollectorBinding
 import com.laad.viniloapp.models.Collector
+import com.laad.viniloapp.models.CollectorPerformers
 import com.laad.viniloapp.viewmodels.CollectorViewModel
 import com.laad.viniloapp.views.adapters.CollectorAdapter
 
@@ -51,7 +52,7 @@ class CollectorFragment : Fragment() {
         val activity = requireNotNull(this.activity) {}
         viewModel = ViewModelProvider(this, CollectorViewModel.Factory(activity.application)).get(
             CollectorViewModel::class.java)
-        viewModel.collectors.observe(viewLifecycleOwner, Observer<List<Collector>> {
+        viewModel.collectors.observe(viewLifecycleOwner, Observer<List<CollectorPerformers>> {
             it.apply {
                 viewModelAdapter!!.collectors = this
             }
@@ -79,5 +80,10 @@ class CollectorFragment : Fragment() {
         val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
             findNavController().navigate(R.id.action_collectorFragment_to_mainActivity);
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.refreshDataFromNetwork()
     }
 }

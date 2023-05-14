@@ -45,10 +45,10 @@ class CollectorDetailFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         val collector = args.collector
-        binding.emailDetailCollector.text=collector.email
-        binding.nameDetailCollector.text=collector.name
-        binding.telDetailCollector.text=collector.telephone
-        Log.d("CollectorDetailFragment", "Collector ${collector.name}")
+        binding.emailDetailCollector.text=collector.collector.email
+        binding.nameDetailCollector.text=collector.collector.name
+        binding.telDetailCollector.text=collector.collector.telephone
+        Log.d("CollectorDetailFragment", "Collector ${collector.collector.name}")
         val favoritePerformers: List<FavoritePerformers>? = collector.favoritePerformers
         if (favoritePerformers != null) {
             viewModelAdapter!!.favoritePerformers = favoritePerformers
