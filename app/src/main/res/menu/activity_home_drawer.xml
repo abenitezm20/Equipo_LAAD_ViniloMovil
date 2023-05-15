@@ -15,10 +15,14 @@
         <item
             android:id="@+id/nav_artist"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Artistas" />
+            android:title="@string/menu_artistas" />
         <item
             android:id="@+id/nav_collector"
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/menu_collector" />
+        <item
+            android:id="@+id/nav_createalbum"
+            android:icon="@drawable/side_nav_bar"
+            android:title="@string/menu_crear_album" />
     </group>
 </menu>

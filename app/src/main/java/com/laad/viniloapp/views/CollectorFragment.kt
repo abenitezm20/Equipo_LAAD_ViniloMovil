@@ -5,54 +5,85 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.addCallback
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.laad.viniloapp.R
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import com.laad.viniloapp.databinding.FragmentCollectorBinding
+import com.laad.viniloapp.models.Collector
+import com.laad.viniloapp.models.CollectorPerformers
+import com.laad.viniloapp.viewmodels.CollectorViewModel
+import com.laad.viniloapp.views.adapters.CollectorAdapter
 
 /**
  * A simple [Fragment] subclass.
- * Use the [CollectorFragment.newInstance] factory method to
+ * Use the [ListCollectorFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
 class CollectorFragment : Fragment() {
+    private var _binding: FragmentCollectorBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var viewModel: CollectorViewModel
+    private var viewModelAdapter: CollectorAdapter? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_collector, container, false)
+        _binding = FragmentCollectorBinding.inflate(inflater, container, false)
+        val view = binding.root
+        viewModelAdapter = CollectorAdapter()
+        return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CollectorFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CollectorFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        recyclerView = binding.CollectorRv
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.adapter = viewModelAdapter
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        val activity = requireNotNull(this.activity) {}
+        viewModel = ViewModelProvider(this, CollectorViewModel.Factory(activity.application)).get(
+            CollectorViewModel::class.java)
+        viewModel.collectors.observe(viewLifecycleOwner, Observer<List<CollectorPerformers>> {
+            it.apply {
+                viewModelAdapter!!.collectors = this
             }
+        })
+        viewModel.eventNetworkError.observe(viewLifecycleOwner, Observer<Boolean> { isNetworkError ->
+            if (isNetworkError) onNetworkError()
+        })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun onNetworkError() {
+        if(!viewModel.isNetworkErrorShown.value!!) {
+            Toast.makeText(activity, "Network Error", Toast.LENGTH_LONG).show()
+            viewModel.onNetworkErrorShown()
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //Controla para que cuando se le de atras retorne al mainActivity
         val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
-            findNavController().navigate(R.id.action_nav_collector_to_mainActivity);
+            findNavController().navigate(R.id.action_collectorFragment_to_mainActivity);
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.refreshDataFromNetwork()
     }
 }

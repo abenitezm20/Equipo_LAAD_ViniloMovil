@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.laad.viniloapp.R
 import com.laad.viniloapp.databinding.ArtistFragmentBinding
 import com.laad.viniloapp.models.Artist
+import com.laad.viniloapp.viewmodels.AlbumViewModel
 import com.laad.viniloapp.viewmodels.ArtistViewModel
 import com.laad.viniloapp.views.adapters.ArtistAdapter
 
@@ -51,7 +52,9 @@ class ArtistFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         val activity = requireNotNull(this.activity) {}
-        viewModel = ViewModelProvider(this, ArtistViewModel.Factory(activity.application)).get(ArtistViewModel::class.java)
+        viewModel = ViewModelProvider(
+            this, ArtistViewModel.Factory(activity.application)
+        )[ArtistViewModel::class.java]
         viewModel.artists.observe(viewLifecycleOwner, Observer<List<Artist>> {
             it.apply {
                 viewModelAdapter!!.artists = this
@@ -80,5 +83,10 @@ class ArtistFragment : Fragment() {
         val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
             findNavController().navigate(R.id.action_nav_artist_to_mainActivity);
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.refreshDataFromNetwork()
     }
 }

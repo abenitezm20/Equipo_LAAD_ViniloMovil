@@ -15,7 +15,6 @@
         android:id="@+id/artistRv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/Fondo"
         tools:listitem="@layout/artist_item" />
 
 </FrameLayout>

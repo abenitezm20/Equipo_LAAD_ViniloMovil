@@ -3,18 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.CollectorFragment"
-    android:background="@color/Fondo"
-    >
+    tools:context=".views.CollectorFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/CollectorRv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Coming soon create album"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:gravity="center"/>
+        android:background="@color/Fondo"
+        android:layout_margin="10dp"
+        tools:listitem="@layout/collector_item" />
 
 </FrameLayout>

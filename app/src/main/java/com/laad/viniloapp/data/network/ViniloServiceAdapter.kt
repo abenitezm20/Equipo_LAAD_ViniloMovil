@@ -1,16 +1,23 @@
 package com.laad.viniloapp.data.network
 
 import android.content.Context
+import android.util.Log
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
-import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.laad.viniloapp.models.Album
 import com.laad.viniloapp.models.Artist
+import com.laad.viniloapp.models.Collector
+import com.laad.viniloapp.models.CollectorPerformers
+import com.laad.viniloapp.models.FavoritePerformers
+import com.laad.viniloapp.utilities.Album_Status
 import org.json.JSONArray
 import java.text.SimpleDateFormat
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 class ViniloServiceAdapter constructor(context: Context) {
 
@@ -29,7 +36,8 @@ class ViniloServiceAdapter constructor(context: Context) {
         Volley.newRequestQueue(context.applicationContext)
     }
 
-    fun getAlbums(onComplete: (resp: List<Album>) -> Unit, onError: (error: VolleyError) -> Unit) {
+    suspend fun getAlbums() = suspendCoroutine<List<Album>> { cont ->
+        Log.d("ViniloServiceAdapter", "Consultando albumes")
         requestQueue.add(
             getRequest("albums", { response ->
                 val resp = JSONArray(response)
@@ -49,36 +57,79 @@ class ViniloServiceAdapter constructor(context: Context) {
                         )
                     )
                 }
-                onComplete(list)
+                Log.d("ViniloServiceAdapter", list.size.toString() + " albumes consultados")
+                cont.resume(list)
             }, {
-                onError(it)
+                cont.resumeWithException(it)
             })
         )
     }
 
-    fun getArtists(onComplete: (resp: List<Artist>) -> Unit, onError: (error: VolleyError) -> Unit) {
+    suspend fun getArtists() = suspendCoroutine<List<Artist>> { cont ->
+        Log.d("ViniloServiceAdapter", "Consultando artistas")
         val dOriginal = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
         val dFormat = SimpleDateFormat("yyyy-MM-dd")
         requestQueue.add(
-            getRequest("musicians", {response ->
+            getRequest("musicians", { response ->
                 val resp = JSONArray(response)
                 val list = mutableListOf<Artist>()
 
 
                 for (i in 0 until resp.length()) {
-                    var item = resp.getJSONObject(i)
+                    val item = resp.getJSONObject(i)
+
+                    var birthD: String = ""
+                    var createD: String = ""
+
+                    if (item.has("birthDate"))
+                        birthD = dFormat.format(dOriginal.parse(item.getString("birthDate")))
+                    if (item.has("creationDate"))
+                        createD = dFormat.format(dOriginal.parse(item.getString("creationDate")))
 
                     list.add(
                         i, Artist(
-                            name ="Nombre: " + item.getString("name"),
+                            id = item.getInt("id"),
+                            name = "Nombre: " + item.getString("name"),
                             image = item.getString("image"),
-                            birthDate ="Fecha de nacimiento: " + dFormat.format(dOriginal.parse(item.getString("birthDate")))
+                            description = item.getString("description"),
+                            birthDate = birthD,
+                            creationDate = createD
                         )
                     )
                 }
-                onComplete(list)
-            }, {onError(it)})
+                Log.d("ViniloServiceAdapter", list.size.toString() + " artistas consultados")
+                cont.resume(list)
+            }, { cont.resumeWithException(it) })
         )
+    }
+
+    suspend fun getCollector() = suspendCoroutine<List<CollectorPerformers>> { cont ->
+        Log.d("ViniloServiceAdapter", "Consultando coleccionistas")
+
+        requestQueue.add(
+            getRequest("collectors", { response ->
+                val resp = JSONArray(response)
+                val list = mutableListOf<CollectorPerformers>()
+
+
+                for (i in 0 until resp.length()) {
+                    val item = resp.getJSONObject(i)
+
+                    list.add(
+                        i, CollectorPerformers(
+                            Collector(
+                                id_collector = item.getInt("id"),
+                                name = item.getString("name"),
+                                telephone = item.getString("telephone"),
+                                email = item.getString("email"),
+                            ), getPerformers(item.getInt("id"), item.getString("favoritePerformers"))
+                        )
+                    )
+                }
+                cont.resume(list)
+            }, { cont.resumeWithException(it) })
+        )
+
     }
 
     private fun getRequest(
@@ -87,6 +138,34 @@ class ViniloServiceAdapter constructor(context: Context) {
         errorListener: Response.ErrorListener
     ): StringRequest {
         return StringRequest(Request.Method.GET, BASE_URL + path, responseListener, errorListener)
+    }
+
+    private fun getPerformers(collectorId: Int, jsonPerformers: String): List<FavoritePerformers> {
+        val datos = JSONArray(jsonPerformers)
+        val list = mutableListOf<FavoritePerformers>()
+
+        for (i in 0 until datos.length()) {
+            val item = datos.getJSONObject(i)
+
+            list.add(
+                i, FavoritePerformers(
+                    id_favorite_performers = item.getInt("id"),
+                    name = item.getString("name"),
+                    image = item.getString("image"),
+                    description = item.getString("description"),
+                    collectorId = collectorId
+                )
+            )
+        }
+        return list
+    }
+
+    private fun getAlbumStatus(status: String): Album_Status {
+        if (status == Album_Status.ACTIVE.value)
+            return Album_Status.ACTIVE
+        if (status == Album_Status.INACTIVE.value)
+            return Album_Status.INACTIVE
+        return Album_Status.INACTIVE
     }
 
 }

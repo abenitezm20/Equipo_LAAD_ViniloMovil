@@ -37,7 +37,7 @@ class HomeFragment : Fragment() {
         viewModel.albums.observe(viewLifecycleOwner) {
             Log.d("HomeFragment", it.toString())
             if (stringTextHome != null) {
-                stringTextHome.text = "Welcome to VinilosApp";
+                stringTextHome.text = getString(R.string.welcome);
             }
         }
     }

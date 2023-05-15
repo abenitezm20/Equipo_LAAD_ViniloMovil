@@ -1,8 +1,8 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.ViniloApp" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- Configuración color de fondo en la aplicación -->
+        <item name="android:background">@color/Fondo</item>
     </style>
 
     <style name="Theme.ViniloApp" parent="Base.Theme.ViniloApp" />
@@ -15,4 +15,5 @@
     <style name="Theme.ViniloApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.ViniloApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 </resources>

@@ -1,9 +1,11 @@
 package com.laad.viniloapp
 
+import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.contrib.DrawerActions
+import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
@@ -66,12 +68,21 @@ public class TestListarArtistas {
             Espresso.onView(withId(R.id.nav_artist))
         listArtistSelec.perform(ViewActions.click());
 
-        //buscando el titulo de un album
-        Espresso.onView(
+        // Verificar lista de artistas, si existe por lo menos uno la prueba es Valida
+        Thread.sleep(500)
+        val recyclerView = Espresso.onView(
             Matchers.allOf(
-                ViewMatchers.withId(R.id.textView7),
-                ViewMatchers.withText("Nombre: Rubén Blades Bellido de Luna")
+                ViewMatchers.withId(R.id.artistRv),
+                ViewMatchers.withParent(ViewMatchers.withParent(ViewMatchers.withId(R.id.nav_host_fragment_content_home))),
+                ViewMatchers.isDisplayed()
             )
-        ).check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+        )
+
+        recyclerView.check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+        recyclerView.perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                0, ViewActions.click()
+            )
+        )
     }
 }
