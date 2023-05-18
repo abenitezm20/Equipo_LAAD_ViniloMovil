@@ -30,20 +30,27 @@ class AlbumFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        Log.d("Debug", "onCreateView")
+        Log.d("AlbumFragment", "onCreateView")
         _binding = AlbumFragmentBinding.inflate(inflater, container, false)
         viewModelAdapter = AlbumAdapter()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        Log.d("AlbumFragment", "onViewCreated")
         recyclerView = binding.albumsRv
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = viewModelAdapter
+
+        val fab: View = view.findViewById(R.id.fab)
+        fab.setOnClickListener { view ->
+            findNavController().navigate(R.id.nav_create_album)
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        Log.d("AlbumFragment", "onActivityCreated")
         val activity = requireNotNull(this.activity) {
             "You can only access the viewModel after onActivityCreated()"
         }
@@ -63,6 +70,7 @@ class AlbumFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        Log.d("AlbumFragment", "onDestroyView")
         _binding = null
     }
 
@@ -75,14 +83,20 @@ class AlbumFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("AlbumFragment", "onCreate")
         //Controla para que cuando se le de atras retorne al mainActivity
         val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
             findNavController().navigate(R.id.action_nav_albums_to_mainActivity);
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        Log.d("AlbumFragment", "onPause")
+    }
+
     override fun onResume() {
         super.onResume()
-        viewModel.refreshDataFromNetwork()
+        Log.d("AlbumFragment", "onResume")
     }
 }

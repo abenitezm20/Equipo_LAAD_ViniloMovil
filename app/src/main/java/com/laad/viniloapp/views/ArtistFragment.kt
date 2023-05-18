@@ -1,14 +1,13 @@
 package com.laad.viniloapp.views
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.laad.viniloapp.R
 import com.laad.viniloapp.databinding.ArtistFragmentBinding
 import com.laad.viniloapp.models.Artist
-import com.laad.viniloapp.viewmodels.AlbumViewModel
 import com.laad.viniloapp.viewmodels.ArtistViewModel
 import com.laad.viniloapp.views.adapters.ArtistAdapter
 
@@ -60,9 +58,11 @@ class ArtistFragment : Fragment() {
                 viewModelAdapter!!.artists = this
             }
         })
-        viewModel.eventNetworkError.observe(viewLifecycleOwner, Observer<Boolean> { isNetworkError ->
-            if (isNetworkError) onNetworkError()
-        })
+        viewModel.eventNetworkError.observe(
+            viewLifecycleOwner,
+            Observer<Boolean> { isNetworkError ->
+                if (isNetworkError) onNetworkError()
+            })
     }
 
     override fun onDestroyView() {
@@ -71,7 +71,7 @@ class ArtistFragment : Fragment() {
     }
 
     private fun onNetworkError() {
-        if(!viewModel.isNetworkErrorShown.value!!) {
+        if (!viewModel.isNetworkErrorShown.value!!) {
             Toast.makeText(activity, "Network Error", Toast.LENGTH_LONG).show()
             viewModel.onNetworkErrorShown()
         }
@@ -85,8 +85,4 @@ class ArtistFragment : Fragment() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.refreshDataFromNetwork()
-    }
 }

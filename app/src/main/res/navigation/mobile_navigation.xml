@@ -47,7 +47,7 @@
             app:destination="@id/mainActivity" />
     </fragment>
     <fragment
-        android:id="@+id/nav_createalbum"
+        android:id="@+id/nav_create_album"
         android:name="com.laad.viniloapp.views.CreateAlbumFragment"
         android:label="Crear Álbum"
         tools:layout="@layout/fragment_create_album">
