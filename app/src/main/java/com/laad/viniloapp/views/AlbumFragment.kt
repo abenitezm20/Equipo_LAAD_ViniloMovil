@@ -13,9 +13,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.laad.viniloapp.R
+import com.laad.viniloapp.ViniloApp
 import com.laad.viniloapp.databinding.AlbumFragmentBinding
 import com.laad.viniloapp.models.Album
+import com.laad.viniloapp.utilities.AppRole
 import com.laad.viniloapp.viewmodels.AlbumViewModel
 import com.laad.viniloapp.views.adapters.AlbumAdapter
 
@@ -42,10 +45,18 @@ class AlbumFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = viewModelAdapter
 
-        val fab: View = view.findViewById(R.id.fab)
-        fab.setOnClickListener { view ->
-            findNavController().navigate(R.id.nav_create_album)
+        val fab: FloatingActionButton = view.findViewById(R.id.fab)
+        val rol: String = ViniloApp.rol?.value ?: AppRole.VISITOR.value
+        if (AppRole.COLLECTOR.value == rol) {
+            fab.show()
+            fab.setOnClickListener { view ->
+                findNavController().navigate(R.id.nav_create_album)
+            }
+        } else {
+            fab.hide()
         }
+
+
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
         visitorButton.setOnClickListener(View.OnClickListener {
             val intent = Intent(this@MainActivity, HomeActivity::class.java)
             intent.putExtra(ROLE, AppRole.VISITOR.value)
+            ViniloApp.rol = AppRole.VISITOR
             startActivity(intent)
         })
 
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity() {
         collectorButton.setOnClickListener(View.OnClickListener {
             val intent = Intent(this@MainActivity, HomeActivity::class.java)
             intent.putExtra(ROLE, AppRole.COLLECTOR.value)
+            ViniloApp.rol = AppRole.COLLECTOR
             startActivity(intent)
         })
     }
