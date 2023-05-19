@@ -55,8 +55,6 @@ class AlbumFragment : Fragment() {
         } else {
             fab.hide()
         }
-
-
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
