@@ -11,6 +11,9 @@ import androidx.lifecycle.viewModelScope
 import com.laad.viniloapp.data.AlbumRepository
 import com.laad.viniloapp.data.database.VinylRoomDatabase
 import com.laad.viniloapp.models.Album
+import com.laad.viniloapp.utilities.ALBUM_CREATED
+import com.laad.viniloapp.utilities.ALBUM_ERROR
+import com.laad.viniloapp.utilities.CREATING_ALBUM
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -34,6 +37,10 @@ class AlbumViewModel(application: Application) : AndroidViewModel(application), 
 
     val isNetworkErrorShown: LiveData<Boolean>
         get() = _isNetworkErrorShown
+
+    private var _isCreateAlbumError = MutableLiveData<Int>(CREATING_ALBUM)
+    val isCreateAlbumError: LiveData<Int>
+        get() = _isCreateAlbumError
 
     init {
         refreshDataFromNetwork()
@@ -80,17 +87,14 @@ class AlbumViewModel(application: Application) : AndroidViewModel(application), 
                             recordLabel = recordLabel
                         )
                     )
-                    Log.d("Aqui", "Nuevo album " + createdAlbum.name)
-                    val updatedAlbumsList = _albums.value.orEmpty().toMutableList()
-                    updatedAlbumsList.add(createdAlbum)
-                    _albums.postValue(updatedAlbumsList)
+                    Log.d("AlbumViewModel", "Nuevo album " + createdAlbum.name)
+                    val updated = albums.value.orEmpty().toMutableList()
+                    updated.add(createdAlbum)
+                    _isCreateAlbumError.postValue(ALBUM_CREATED)
                 }
-                _eventNetworkError.postValue(false)
-                _isNetworkErrorShown.postValue(false)
             }
-
         } catch (e: Exception) {
-            _eventNetworkError.value = true
+            _isCreateAlbumError.value = ALBUM_ERROR
         }
     }
 

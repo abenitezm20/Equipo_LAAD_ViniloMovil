@@ -14,9 +14,12 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.laad.viniloapp.R
+import com.laad.viniloapp.utilities.ALBUM_CREATED
+import com.laad.viniloapp.utilities.CREATING_ALBUM
 import com.laad.viniloapp.utilities.Utils.Companion.showToast
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -59,6 +62,19 @@ class CreateAlbumFragment : Fragment() {
         setGenreSpinner(view)
         setRecordLabelSpinner(view)
         setCreateButton(view)
+        setEventNetworkError()
+    }
+
+    private fun setEventNetworkError() {
+        args.albumViewModel.isCreateAlbumError.observe(viewLifecycleOwner,
+            Observer<Int> { codeError ->
+                Log.d("CreateAlbumFragment", "Llego codigo error $codeError")
+                when (codeError) {
+                    CREATING_ALBUM -> Log.d("CreateAlbumFragment", "En proceso creacion album")
+                    ALBUM_CREATED -> findNavController().navigate(R.id.nav_albums)
+                    else -> context?.let { showToast(it, "Network Error") }
+                }
+            })
     }
 
     private fun setCreateButton(view: View) {
@@ -121,8 +137,6 @@ class CreateAlbumFragment : Fragment() {
             genre = genreSpinner.selectedItem.toString(),
             recordLabel = recordLabelSpinner.selectedItem.toString()
         )
-
-        findNavController().navigate(R.id.nav_albums)
     }
 
     private fun setRecordLabelSpinner(view: View) {

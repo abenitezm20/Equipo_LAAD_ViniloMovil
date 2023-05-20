@@ -72,7 +72,7 @@ class AlbumFragment : Fragment() {
         viewModel.albums.observe(viewLifecycleOwner, Observer<List<Album>> {
             it.apply {
                 viewModelAdapter!!.albums = this
-                Log.d("AlbumFragment", "Cambio en lista albumes " + this.size)
+                Log.d("AlbumFragment", "Cambio en lista albumes " + viewModelAdapter!!.itemCount)
                 Log.d("AlbumFragment", Objects.toString(this))
             }
         })
