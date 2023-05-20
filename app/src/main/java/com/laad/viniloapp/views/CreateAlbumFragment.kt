@@ -14,10 +14,14 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.laad.viniloapp.R
+import com.laad.viniloapp.utilities.ALBUM_CREATED
+import com.laad.viniloapp.utilities.CREATING_ALBUM
 import com.laad.viniloapp.utilities.Utils.Companion.showToast
+import com.laad.viniloapp.viewmodels.AlbumViewModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -33,7 +37,7 @@ class CreateAlbumFragment : Fragment() {
 
     private val calendar = Calendar.getInstance()
     private lateinit var releaseDate: TextView
-    private val args: CreateAlbumFragmentArgs by navArgs()
+    private lateinit var albumViewModel: AlbumViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -52,6 +56,7 @@ class CreateAlbumFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        albumViewModel = ViewModelProvider(this)[AlbumViewModel::class.java]
         releaseDate = view.findViewById(R.id.releaseDate)
         releaseDate.setOnClickListener {
             showDatePickerDialog()
@@ -59,6 +64,18 @@ class CreateAlbumFragment : Fragment() {
         setGenreSpinner(view)
         setRecordLabelSpinner(view)
         setCreateButton(view)
+        setEventNetworkError()
+    }
+
+    private fun setEventNetworkError() {
+        albumViewModel.isCreateAlbumError.observe(viewLifecycleOwner, Observer<Int> { codeError ->
+            Log.d("CreateAlbumFragment", "Llego codigo error $codeError")
+            when (codeError) {
+                CREATING_ALBUM -> Log.d("CreateAlbumFragment", "En proceso creacion album")
+                ALBUM_CREATED -> findNavController().navigate(R.id.nav_albums)
+                else -> context?.let { showToast(it, "Network Error") }
+            }
+        })
     }
 
     private fun setCreateButton(view: View) {
@@ -113,7 +130,7 @@ class CreateAlbumFragment : Fragment() {
         }
 
         Log.d("CreateAlbumFragment", "Formulario OK")
-        args.albumViewModel.createAlbum(
+        albumViewModel.createAlbum(
             name = name.text.toString(),
             imageUrl = imageUrl.text.toString(),
             releaseDate = releaseDate.text.toString(),
@@ -121,8 +138,6 @@ class CreateAlbumFragment : Fragment() {
             genre = genreSpinner.selectedItem.toString(),
             recordLabel = recordLabelSpinner.selectedItem.toString()
         )
-
-        findNavController().navigate(R.id.nav_albums)
     }
 
     private fun setRecordLabelSpinner(view: View) {

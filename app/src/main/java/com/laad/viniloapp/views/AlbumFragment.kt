@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -52,8 +51,7 @@ class AlbumFragment : Fragment() {
         if (AppRole.COLLECTOR.value == rol) {
             fab.show()
             fab.setOnClickListener { view ->
-                val bundle = bundleOf("albumViewModel" to viewModel)
-                findNavController().navigate(R.id.nav_create_album, bundle)
+                findNavController().navigate(R.id.nav_create_album)
             }
         } else {
             fab.hide()
@@ -72,7 +70,7 @@ class AlbumFragment : Fragment() {
         viewModel.albums.observe(viewLifecycleOwner, Observer<List<Album>> {
             it.apply {
                 viewModelAdapter!!.albums = this
-                Log.d("AlbumFragment", "Cambio en lista albumes " + this.size)
+                Log.d("AlbumFragment", "Cambio en lista albumes " + viewModelAdapter!!.itemCount)
                 Log.d("AlbumFragment", Objects.toString(this))
             }
         })

@@ -52,12 +52,9 @@
         android:label="Crear Álbum"
         tools:layout="@layout/fragment_create_album">
 
-        <argument
-            android:name="albumViewModel"
-            app:argType="com.laad.viniloapp.viewmodels.AlbumViewModel" />
         <action
             android:id="@+id/action_nav_createalbum_to_mainActivity"
-            app:destination="@id/mainActivity" />
+            app:destination="@id/nav_albums" />
     </fragment>
 
     <activity
