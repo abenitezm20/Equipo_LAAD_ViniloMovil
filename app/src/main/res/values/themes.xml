@@ -3,6 +3,7 @@
     <style name="Base.Theme.ViniloApp" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Configuración color de fondo en la aplicación -->
         <item name="android:background">@color/Fondo</item>
+        <item name="android:datePickerDialogTheme">@style/CustomDatePickerDialog</item>
     </style>
 
     <style name="Theme.ViniloApp" parent="Base.Theme.ViniloApp" />
@@ -15,5 +16,16 @@
     <style name="Theme.ViniloApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.ViniloApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="CustomDatePickerDialog" parent="ThemeOverlay.AppCompat.Dialog">
+        <!--header textcolor-->
+        <item name="android:textColorPrimaryInverse">@color/white</item>
+        <!--selected day-->
+        <item name="android:colorControlActivated">@color/Azul</item>
+        <!--days of the month-->
+        <item name="android:textColorPrimary">@color/white</item>
+        <!--days of the week-->
+        <item name="android:textColorSecondary">@color/Azul</item>
+    </style>
 
 </resources>

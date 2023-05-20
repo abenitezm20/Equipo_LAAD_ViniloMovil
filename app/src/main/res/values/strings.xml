@@ -17,14 +17,39 @@
     <string name="album_genre">"Género: %s"</string>
     <string name="album_record_label">"Casa discográfica: %s"</string>
     <string name="menu_artistas">Artistas</string>
-    <string name="text_create_album">Coming soon create album</string>
     <string name="title_preformers_collector">Artistas Favoritos</string>
     <string name="img_preformers_collector">Imagen Performers</string>
     <string name="name_collector">Nombre</string>
     <string name="tel_collector">Telefono</string>
     <string name="email_collector">Email</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="create_album_name_title">Nombre</string>
+    <string name="create_album_name_hint">Nombre álbum</string>
+    <string name="create_album_image_title">Imagen</string>
+    <string name="create_album_image_hint">URL imagen álbum</string>
+    <string name="create_album_desc_title">Descripción</string>
+    <string name="create_album_desc_hint">Descripción álbum</string>
+    <string name="create_album_release_date_title">Fecha lanzamiento</string>
+    <string name="create_album_release_date_hint">Fecha</string>
+    <string name="create_album_genre">Género</string>
+    <string-array name="music_genres">
+        <item>Classical</item>
+        <item>Salsa</item>
+        <item>Rock</item>
+        <item>Folk</item>
+    </string-array>
+    <string name="create_album_record_label">Casa discográfica</string>
+    <string-array name="record_labels">
+        <item>Sony Music</item>
+        <item>EMI</item>
+        <item>Discos Fuentes</item>
+        <item>Elektra</item>
+        <item>Fania Records</item>
+    </string-array>
+    <string name="create_album_button">Guardar</string>
+    <string name="invalid_name">Debe ingresar un nombre válido</string>
+    <string name="invalid_image_url">Debe ingresar una URL válida para la imagen</string>
+    <string name="invalid_release_date">Debe ingresar una fecha de lanzamiento válido</string>
+    <string name="invalid_description">Debe ingresar una descripción válida</string>
+    <string name="invalid_genre">Debe ingresar un género válido</string>
+    <string name="invalid_record_label">Debe ingresar una casa discográfica válida</string>
 </resources>
