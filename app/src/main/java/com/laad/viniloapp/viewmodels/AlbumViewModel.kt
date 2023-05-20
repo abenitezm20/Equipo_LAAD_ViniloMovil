@@ -20,6 +20,18 @@ import kotlinx.coroutines.withContext
 import java.io.Serializable
 
 class AlbumViewModel(application: Application) : AndroidViewModel(application), Serializable {
+
+    companion object {
+        @Volatile
+        private var instance: AlbumViewModel? = null
+
+        fun getInstance(application: Application): AlbumViewModel {
+            return instance ?: synchronized(this) {
+                instance ?: AlbumViewModel(application).also { instance = it }
+            }
+        }
+    }
+
     private val _albums = MutableLiveData<List<Album>>()
     private val albumRepository = AlbumRepository(
         application, VinylRoomDatabase.getDatabase(application.applicationContext).albumsDao()
