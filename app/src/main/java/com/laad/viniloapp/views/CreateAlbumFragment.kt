@@ -15,6 +15,7 @@ import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.laad.viniloapp.R
 import com.laad.viniloapp.utilities.Utils.Companion.showToast
 import java.text.SimpleDateFormat
@@ -22,11 +23,6 @@ import java.util.Calendar
 import java.util.Locale
 import java.util.Objects
 
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
@@ -37,31 +33,13 @@ class CreateAlbumFragment : Fragment() {
 
     private val calendar = Calendar.getInstance()
     private lateinit var releaseDate: TextView
+    private val args: CreateAlbumFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_create_album, container, false)
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CollectorFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) = CollectorFragment().apply {
-            arguments = Bundle().apply {
-                putString(ARG_PARAM1, param1)
-                putString(ARG_PARAM2, param2)
-            }
-        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,17 +65,15 @@ class CreateAlbumFragment : Fragment() {
         val createAlbumButton: Button = view.findViewById(R.id.create_album_button)
         createAlbumButton.setOnClickListener(View.OnClickListener {
             Log.d("CreateAlbumFragment", "Creando album")
-            if (checkInputs(view)) {
-                Log.d("CreateAlbumFragment", "Formulario OK")
-            }
+            processNewAlbum(view)
         })
     }
 
-    private fun checkInputs(view: View): Boolean {
+    private fun processNewAlbum(view: View) {
         val name: EditText = view.findViewById(R.id.createAlbumName)
         if (Objects.isNull(name) || name.text.toString().isEmpty()) {
             context?.let { showToast(it, getString(R.string.invalid_name)) }
-            return false
+            return
         }
 
         val imageUrl: EditText = view.findViewById(R.id.createAlbumImage)
@@ -105,19 +81,19 @@ class CreateAlbumFragment : Fragment() {
                 .isEmpty() || !isValidUrl(imageUrl.text.toString())
         ) {
             context?.let { showToast(it, getString(R.string.invalid_image_url)) }
-            return false
+            return
         }
 
         val releaseDate: TextView = view.findViewById(R.id.releaseDate)
         if (Objects.isNull(releaseDate) || releaseDate.text.isEmpty()) {
             context?.let { showToast(it, getString(R.string.invalid_release_date)) }
-            return false
+            return
         }
 
         val description: EditText = view.findViewById(R.id.createAlbumDesc)
         if (Objects.isNull(description) || description.text.isEmpty()) {
             context?.let { showToast(it, getString(R.string.invalid_description)) }
-            return false
+            return
         }
 
         val genreSpinner: Spinner = view.findViewById(R.id.musicGenreSpinner)
@@ -125,7 +101,7 @@ class CreateAlbumFragment : Fragment() {
                 .isEmpty()
         ) {
             context?.let { showToast(it, getString(R.string.invalid_genre)) }
-            return false
+            return
         }
 
         val recordLabelSpinner: Spinner = view.findViewById(R.id.recordLabelSpinner)
@@ -133,28 +109,38 @@ class CreateAlbumFragment : Fragment() {
                 .isEmpty()
         ) {
             context?.let { showToast(it, getString(R.string.invalid_record_label)) }
-            return false
+            return
         }
 
-        return true
+        Log.d("CreateAlbumFragment", "Formulario OK")
+        args.albumViewModel.createAlbum(
+            name = name.text.toString(),
+            imageUrl = imageUrl.text.toString(),
+            releaseDate = releaseDate.text.toString(),
+            description = description.text.toString(),
+            genre = genreSpinner.selectedItem.toString(),
+            recordLabel = recordLabelSpinner.selectedItem.toString()
+        )
+
+        findNavController().navigate(R.id.nav_albums)
     }
 
     private fun setRecordLabelSpinner(view: View) {
         var spinner: Spinner = view.findViewById(R.id.recordLabelSpinner)
         val recordLabels = resources.getStringArray(R.array.record_labels)
-        val spinnerAdapater =
+        val spinnerAdapter =
             ArrayAdapter(requireContext(), R.layout.album_spinner_list, recordLabels)
-        spinnerAdapater.setDropDownViewResource(R.layout.album_spinner_list)
-        spinner.adapter = spinnerAdapater
+        spinnerAdapter.setDropDownViewResource(R.layout.album_spinner_list)
+        spinner.adapter = spinnerAdapter
     }
 
     private fun setGenreSpinner(view: View) {
         var spinner: Spinner = view.findViewById(R.id.musicGenreSpinner)
         val musicGenres = resources.getStringArray(R.array.music_genres)
-        val spinnerAdapater =
+        val spinnerAdapter =
             ArrayAdapter(requireContext(), R.layout.album_spinner_list, musicGenres)
-        spinnerAdapater.setDropDownViewResource(R.layout.album_spinner_list)
-        spinner.adapter = spinnerAdapater
+        spinnerAdapter.setDropDownViewResource(R.layout.album_spinner_list)
+        spinner.adapter = spinnerAdapter
     }
 
     private fun showDatePickerDialog() {

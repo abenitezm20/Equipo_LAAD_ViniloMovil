@@ -7,6 +7,7 @@ import android.util.Log
 import com.laad.viniloapp.data.database.CachedAlbumsDao
 import com.laad.viniloapp.data.network.ViniloServiceAdapter
 import com.laad.viniloapp.models.Album
+import com.laad.viniloapp.models.AlbumRequest
 import com.laad.viniloapp.utilities.CACHE_EXPIRATION_TIME
 
 class AlbumRepository(val application: Application, private val cachedAlbumsDao: CachedAlbumsDao) {
@@ -34,6 +35,21 @@ class AlbumRepository(val application: Application, private val cachedAlbumsDao:
             Log.d("AlbumRepository", "Información albumes desde cache BD")
             cachedAlbums
         }
+    }
+
+    suspend fun createAlbum(album: Album): Album {
+        Log.d("AlbumRepository", "Creando album")
+        val req = AlbumRequest(
+            name = album.name,
+            cover = album.cover,
+            recordLabel = album.recordLabel,
+            releaseDate = album.releaseDate,
+            genre = album.genre,
+            description = album.description
+        )
+        val newAlbum = ViniloServiceAdapter.getInstance(application).createAlbum(req)
+        cachedAlbumsDao.insert(newAlbum)
+        return newAlbum
     }
 
     private fun isDisabledNetwork(): Boolean {

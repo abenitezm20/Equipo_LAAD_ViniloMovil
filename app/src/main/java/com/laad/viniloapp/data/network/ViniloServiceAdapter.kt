@@ -5,15 +5,18 @@ import android.util.Log
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.google.gson.Gson
 import com.laad.viniloapp.models.Album
+import com.laad.viniloapp.models.AlbumRequest
 import com.laad.viniloapp.models.Artist
 import com.laad.viniloapp.models.Collector
 import com.laad.viniloapp.models.CollectorPerformers
 import com.laad.viniloapp.models.FavoritePerformers
-import com.laad.viniloapp.utilities.Album_Status
 import org.json.JSONArray
+import org.json.JSONObject
 import java.text.SimpleDateFormat
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -42,26 +45,36 @@ class ViniloServiceAdapter constructor(context: Context) {
             getRequest("albums", { response ->
                 val resp = JSONArray(response)
                 val list = mutableListOf<Album>()
-
                 for (i in 0 until resp.length()) {
                     val item = resp.getJSONObject(i)
-                    list.add(
-                        i, Album(
-                            id = item.getInt("id"),
-                            name = item.getString("name"),
-                            cover = item.getString("cover"),
-                            recordLabel = item.getString("recordLabel"),
-                            releaseDate = item.getString("releaseDate"),
-                            genre = item.getString("genre"),
-                            description = item.getString("description")
-                        )
-                    )
+                    list.add(i, extractAlbum(item))
                 }
                 Log.d("ViniloServiceAdapter", list.size.toString() + " albumes consultados")
                 cont.resume(list)
             }, {
                 cont.resumeWithException(it)
             })
+        )
+    }
+
+    suspend fun createAlbum(album: AlbumRequest) = suspendCoroutine<Album> { cont ->
+        Log.d("ViniloServiceAdapter", "Creando album")
+        requestQueue.add(
+            postRequest("albums", album, { response ->
+                cont.resume(extractAlbum(response))
+            }, { cont.resumeWithException(it) })
+        )
+    }
+
+    private fun extractAlbum(item: JSONObject): Album {
+        return Album(
+            id = item.getInt("id"),
+            name = item.getString("name"),
+            cover = item.getString("cover"),
+            recordLabel = item.getString("recordLabel"),
+            releaseDate = item.getString("releaseDate"),
+            genre = item.getString("genre"),
+            description = item.getString("description")
         )
     }
 
@@ -81,10 +94,10 @@ class ViniloServiceAdapter constructor(context: Context) {
                     var birthD: String = ""
                     var createD: String = ""
 
-                    if (item.has("birthDate"))
-                        birthD = dFormat.format(dOriginal.parse(item.getString("birthDate")))
-                    if (item.has("creationDate"))
-                        createD = dFormat.format(dOriginal.parse(item.getString("creationDate")))
+                    if (item.has("birthDate")) birthD =
+                        dFormat.format(dOriginal.parse(item.getString("birthDate")))
+                    if (item.has("creationDate")) createD =
+                        dFormat.format(dOriginal.parse(item.getString("creationDate")))
 
                     list.add(
                         i, Artist(
@@ -122,7 +135,8 @@ class ViniloServiceAdapter constructor(context: Context) {
                                 name = item.getString("name"),
                                 telephone = item.getString("telephone"),
                                 email = item.getString("email"),
-                            ), getPerformers(item.getInt("id"), item.getString("favoritePerformers"))
+                            ),
+                            getPerformers(item.getInt("id"), item.getString("favoritePerformers"))
                         )
                     )
                 }
@@ -138,6 +152,19 @@ class ViniloServiceAdapter constructor(context: Context) {
         errorListener: Response.ErrorListener
     ): StringRequest {
         return StringRequest(Request.Method.GET, BASE_URL + path, responseListener, errorListener)
+    }
+
+    private fun <T> postRequest(
+        path: String,
+        data: T,
+        responseListener: Response.Listener<JSONObject>,
+        errorListener: Response.ErrorListener
+    ): JsonObjectRequest {
+        val jsonString = Gson().toJson(data)
+        val body = JSONObject(jsonString)
+        return JsonObjectRequest(
+            Request.Method.POST, BASE_URL + path, body, responseListener, errorListener
+        )
     }
 
     private fun getPerformers(collectorId: Int, jsonPerformers: String): List<FavoritePerformers> {
@@ -158,14 +185,6 @@ class ViniloServiceAdapter constructor(context: Context) {
             )
         }
         return list
-    }
-
-    private fun getAlbumStatus(status: String): Album_Status {
-        if (status == Album_Status.ACTIVE.value)
-            return Album_Status.ACTIVE
-        if (status == Album_Status.INACTIVE.value)
-            return Album_Status.INACTIVE
-        return Album_Status.INACTIVE
     }
 
 }
