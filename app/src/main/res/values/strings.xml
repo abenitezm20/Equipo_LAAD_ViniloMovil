@@ -45,4 +45,11 @@
         <item>Elektra</item>
         <item>Fania Records</item>
     </string-array>
+    <string name="create_album_button">Guardar</string>
+    <string name="invalid_name">Debe ingresar un nombre válido</string>
+    <string name="invalid_image_url">Debe ingresar una URL válida para la imagen</string>
+    <string name="invalid_release_date">Debe ingresar una fecha de lanzamiento válido</string>
+    <string name="invalid_description">Debe ingresar una descripción válida</string>
+    <string name="invalid_genre">Debe ingresar un género válido</string>
+    <string name="invalid_record_label">Debe ingresar una casa discográfica válida</string>
 </resources>

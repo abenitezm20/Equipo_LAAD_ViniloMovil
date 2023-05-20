@@ -2,19 +2,26 @@ package com.laad.viniloapp.views
 
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.URLUtil.isValidUrl
 import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.laad.viniloapp.R
+import com.laad.viniloapp.utilities.Utils.Companion.showToast
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import java.util.Objects
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -60,7 +67,7 @@ class CreateAlbumFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //Controla para que cuando se le de atras retorne al mainActivity
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
             findNavController().navigate(R.id.action_nav_createalbum_to_mainActivity);
         }
     }
@@ -73,6 +80,63 @@ class CreateAlbumFragment : Fragment() {
         }
         setGenreSpinner(view)
         setRecordLabelSpinner(view)
+        setCreateButton(view)
+    }
+
+    private fun setCreateButton(view: View) {
+        val createAlbumButton: Button = view.findViewById(R.id.create_album_button)
+        createAlbumButton.setOnClickListener(View.OnClickListener {
+            Log.d("CreateAlbumFragment", "Creando album")
+            if (checkInputs(view)) {
+                Log.d("CreateAlbumFragment", "Formulario OK")
+            }
+        })
+    }
+
+    private fun checkInputs(view: View): Boolean {
+        val name: EditText = view.findViewById(R.id.createAlbumName)
+        if (Objects.isNull(name) || name.text.toString().isEmpty()) {
+            context?.let { showToast(it, getString(R.string.invalid_name)) }
+            return false
+        }
+
+        val imageUrl: EditText = view.findViewById(R.id.createAlbumImage)
+        if (Objects.isNull(imageUrl) || imageUrl.text.toString()
+                .isEmpty() || !isValidUrl(imageUrl.text.toString())
+        ) {
+            context?.let { showToast(it, getString(R.string.invalid_image_url)) }
+            return false
+        }
+
+        val releaseDate: TextView = view.findViewById(R.id.releaseDate)
+        if (Objects.isNull(releaseDate) || releaseDate.text.isEmpty()) {
+            context?.let { showToast(it, getString(R.string.invalid_release_date)) }
+            return false
+        }
+
+        val description: EditText = view.findViewById(R.id.createAlbumDesc)
+        if (Objects.isNull(description) || description.text.isEmpty()) {
+            context?.let { showToast(it, getString(R.string.invalid_description)) }
+            return false
+        }
+
+        val genreSpinner: Spinner = view.findViewById(R.id.musicGenreSpinner)
+        if (Objects.isNull(genreSpinner) || Objects.isNull(genreSpinner.selectedItem) || genreSpinner.selectedItem.toString()
+                .isEmpty()
+        ) {
+            context?.let { showToast(it, getString(R.string.invalid_genre)) }
+            return false
+        }
+
+        val recordLabelSpinner: Spinner = view.findViewById(R.id.recordLabelSpinner)
+        if (Objects.isNull(recordLabelSpinner) || Objects.isNull(recordLabelSpinner.selectedItem) || recordLabelSpinner.selectedItem.toString()
+                .isEmpty()
+        ) {
+            context?.let { showToast(it, getString(R.string.invalid_record_label)) }
+            return false
+        }
+
+        return true
     }
 
     private fun setRecordLabelSpinner(view: View) {
@@ -101,7 +165,7 @@ class CreateAlbumFragment : Fragment() {
                 // Actualizar la fecha seleccionada en el TextView
                 calendar.set(year, month, dayOfMonth)
                 val selectedDate =
-                    SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(calendar.time)
+                    SimpleDateFormat("MM/dd/yyyy", Locale.getDefault()).format(calendar.time)
                 releaseDate.text = selectedDate
             },
             calendar.get(Calendar.YEAR),
