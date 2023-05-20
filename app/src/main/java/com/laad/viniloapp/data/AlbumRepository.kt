@@ -49,6 +49,7 @@ class AlbumRepository(val application: Application, private val cachedAlbumsDao:
         )
         val newAlbum = ViniloServiceAdapter.getInstance(application).createAlbum(req)
         cachedAlbumsDao.insert(newAlbum)
+        Log.d("AlbumRepository", "Abum creado")
         return newAlbum
     }
 
