@@ -45,7 +45,20 @@
         <action
             android:id="@+id/action_nav_artist_to_mainActivity"
             app:destination="@id/mainActivity" />
+        <action
+            android:id="@+id/action_nav_artist_to_nav_detail_artist"
+            app:destination="@id/nav_detail_artist" />
     </fragment>
+    <fragment
+        android:id="@+id/nav_detail_artist"
+        android:name="com.laad.viniloapp.views.ArtistDetailFragment"
+        android:label="Detalle Artista"
+        tools:layout="@layout/artist_detail_fragment">
+        <argument
+            android:name="artist"
+            app:argType="com.laad.viniloapp.models.Artist" />
+    </fragment>
+
     <fragment
         android:id="@+id/nav_create_album"
         android:name="com.laad.viniloapp.views.CreateAlbumFragment"

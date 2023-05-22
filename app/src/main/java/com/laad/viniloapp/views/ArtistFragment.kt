@@ -1,6 +1,7 @@
 package com.laad.viniloapp.views
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,13 +19,8 @@ import com.laad.viniloapp.models.Artist
 import com.laad.viniloapp.viewmodels.ArtistViewModel
 import com.laad.viniloapp.views.adapters.ArtistAdapter
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ArtistFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class ArtistFragment : Fragment() {
 
+class ArtistFragment : Fragment() {
     private var _binding: ArtistFragmentBinding? = null
     private val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
@@ -36,12 +32,12 @@ class ArtistFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = ArtistFragmentBinding.inflate(inflater, container, false)
-        val view = binding.root
         viewModelAdapter = ArtistAdapter()
-        return view
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        Log.d("ArtistFragment", "onViewCreated")
         recyclerView = binding.artistRv
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = viewModelAdapter
@@ -67,6 +63,7 @@ class ArtistFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        Log.d("ArtistFragment", "onDestroyView")
         _binding = null
     }
 
@@ -79,10 +76,21 @@ class ArtistFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("ArtistFragment", "onCreate")
         //Controla para que cuando se le de atras retorne al mainActivity
         val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
             findNavController().navigate(R.id.action_nav_artist_to_mainActivity);
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("ArtistFragment", "onPause")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("ArtistFragment", "onResume")
     }
 
 }

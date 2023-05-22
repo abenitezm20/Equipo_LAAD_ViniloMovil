@@ -52,4 +52,7 @@
     <string name="invalid_description">Debe ingresar una descripción válida</string>
     <string name="invalid_genre">Debe ingresar un género válido</string>
     <string name="invalid_record_label">Debe ingresar una casa discográfica válida</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="artist_record_label">Cumpleaños</string>
 </resources>
