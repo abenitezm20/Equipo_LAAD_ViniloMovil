@@ -13,7 +13,7 @@
         android:layout_height="210dp"
         android:layout_gravity="center_horizontal"
         android:layout_margin="15dp"
-        android:contentDescription="Album Cover" />
+        android:contentDescription="@string/album_cover_description" />
 
     <TextView
         android:id="@+id/detail_album_name"
