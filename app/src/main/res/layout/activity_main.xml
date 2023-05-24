@@ -21,9 +21,9 @@
             android:layout_marginTop="90dp"
             android:fontFamily="@font/grand_hotel_regular"
             android:text="@string/app_title"
+            android:textColor="@color/white"
             android:textSize="65sp"
-            android:textStyle="bold"
-            android:textColor="@color/white"/>
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/collector_home_button"
@@ -31,11 +31,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="35dp"
-            android:text="@string/collector_home_button"
-            android:backgroundTint="@color/Gris"
+            android:backgroundTint="@color/button"
             android:fontFamily="@font/roboto"
-            android:textSize="15sp"
-            android:textColor="@color/Azul"/>
+            android:text="@string/collector_home_button"
+            android:textColor="@color/button_text"
+            android:textSize="15sp" />
 
         <Button
             android:id="@+id/visitor_home_button"
@@ -43,12 +43,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="5dp"
-            android:text="@string/visitor_home_button"
-            android:backgroundTint="@color/Gris"
+            android:backgroundTint="@color/button"
             android:fontFamily="@font/roboto"
-            android:textSize="15sp"
-            android:textColor="@color/Azul"
-            />
+            android:text="@string/visitor_home_button"
+            android:textColor="@color/button_text"
+            android:textSize="15sp" />
 
     </LinearLayout>
 
