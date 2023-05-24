@@ -15,7 +15,6 @@ import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.laad.viniloapp.R
 import com.laad.viniloapp.utilities.ALBUM_CREATED
@@ -56,7 +55,8 @@ class CreateAlbumFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        albumViewModel = ViewModelProvider(this)[AlbumViewModel::class.java]
+        val activity = requireNotNull(this.activity)
+        albumViewModel = AlbumViewModel.getInstance(activity.application)
         releaseDate = view.findViewById(R.id.releaseDate)
         releaseDate.setOnClickListener {
             showDatePickerDialog()
