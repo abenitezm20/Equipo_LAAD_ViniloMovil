@@ -111,6 +111,10 @@ class AlbumViewModel(application: Application) : AndroidViewModel(application), 
         }
     }
 
+    fun resetCreateAlbumFlag() {
+        _isCreateAlbumError.value = CREATING_ALBUM
+    }
+
     class Factory(val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(AlbumViewModel::class.java)) {
