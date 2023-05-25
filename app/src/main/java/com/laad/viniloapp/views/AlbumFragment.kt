@@ -17,7 +17,9 @@ import com.laad.viniloapp.R
 import com.laad.viniloapp.ViniloApp
 import com.laad.viniloapp.databinding.AlbumFragmentBinding
 import com.laad.viniloapp.models.Album
+import com.laad.viniloapp.utilities.ALBUM_CREATED
 import com.laad.viniloapp.utilities.AppRole
+import com.laad.viniloapp.utilities.Utils
 import com.laad.viniloapp.viewmodels.AlbumViewModel
 import com.laad.viniloapp.views.adapters.AlbumAdapter
 import java.util.Objects
@@ -74,11 +76,30 @@ class AlbumFragment : Fragment() {
                 Log.d("AlbumFragment", Objects.toString(this))
             }
         })
-        viewModel.eventNetworkError.observe(
-            viewLifecycleOwner,
+        viewModel.eventNetworkError.observe(viewLifecycleOwner,
             Observer<Boolean> { isNetworkError ->
                 if (isNetworkError) onNetworkError()
             })
+
+        if (viewModel.isCreateAlbumError.value == ALBUM_CREATED) {
+            Log.d("AlbumFragment", "Album ya creado")
+            processNewAlbum()
+        }
+
+        viewModel.isCreateAlbumError.observe(viewLifecycleOwner) { code ->
+            when (code) {
+                ALBUM_CREATED -> {
+                    Log.d("AlbumFragment", "Album recien creado")
+                    processNewAlbum()
+                }
+            }
+        }
+    }
+
+    private fun processNewAlbum() {
+        viewModel.refreshDataFromNetwork()
+        viewModel.resetCreateAlbumFlag()
+        context?.let { Utils.showToast(it, "{Álbum creado}") }
     }
 
     override fun onDestroyView() {
