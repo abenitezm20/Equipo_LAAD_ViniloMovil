@@ -23,7 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
-        android:contentDescription="Crear Álbum"
+        android:backgroundTint="@color/button"
+        android:contentDescription="@string/crear_album_description"
         android:src="@drawable/create_album" />
 
 </FrameLayout>

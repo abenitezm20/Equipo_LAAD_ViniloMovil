@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,6 +24,11 @@ import java.util.Objects
 
 
 class AlbumFragment : Fragment() {
+
+    companion object {
+        var onCreate: Boolean = false
+    }
+
     private var _binding: AlbumFragmentBinding? = null
     private val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
@@ -61,12 +65,8 @@ class AlbumFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         Log.d("AlbumFragment", "onActivityCreated")
-        val activity = requireNotNull(this.activity) {
-            "You can only access the viewModel after onActivityCreated()"
-        }
-        viewModel = ViewModelProvider(
-            this, AlbumViewModel.Factory(activity.application)
-        )[AlbumViewModel::class.java]
+        val activity = requireNotNull(this.activity)
+        viewModel = AlbumViewModel.getInstance(activity.application)
         viewModel.albums.observe(viewLifecycleOwner, Observer<List<Album>> {
             it.apply {
                 viewModelAdapter!!.albums = this
@@ -97,6 +97,7 @@ class AlbumFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("AlbumFragment", "onCreate")
+        onCreate = true
         //Controla para que cuando se le de atras retorne al mainActivity
         val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
             findNavController().navigate(R.id.action_nav_albums_to_mainActivity);
@@ -111,5 +112,10 @@ class AlbumFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         Log.d("AlbumFragment", "onResume")
+        if (onCreate) {
+            onCreate = false
+        } else {
+            viewModel.refreshDataFromNetwork()
+        }
     }
 }
