@@ -100,7 +100,7 @@ class ViniloServiceAdapter constructor(context: Context) {
             description = item.getString("description"),
             rating = Integer.parseInt(item.getString("rating")),
             albumId = albumid,
-            collectorId = 1
+            collectorId = 100
         )
     }
 

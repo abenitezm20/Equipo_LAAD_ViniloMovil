@@ -12,7 +12,7 @@ class CommentRepository (val application: Application, private val cachedComment
 
     suspend fun createComment(comment: Comment): Comment {
         Log.d("CommentRepository", "Creando Comentario en repositorio")
-        val collectorTemp = Collector(1, "Colecctor Test","57300856236","col@test.com")
+        val collectorTemp = Collector(100, "Colecctor Test","57300856236","col@test.com")
         val req = CommentRequest(
             description = comment.description,
             rating = comment.rating,
