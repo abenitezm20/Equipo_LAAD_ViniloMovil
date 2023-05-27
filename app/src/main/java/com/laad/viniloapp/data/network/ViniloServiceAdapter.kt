@@ -14,6 +14,8 @@ import com.laad.viniloapp.models.AlbumRequest
 import com.laad.viniloapp.models.Artist
 import com.laad.viniloapp.models.Collector
 import com.laad.viniloapp.models.CollectorPerformers
+import com.laad.viniloapp.models.Comment
+import com.laad.viniloapp.models.CommentRequest
 import com.laad.viniloapp.models.FavoritePerformers
 import org.json.JSONArray
 import org.json.JSONObject
@@ -78,6 +80,30 @@ class ViniloServiceAdapter constructor(context: Context) {
         )
     }
 
+    suspend fun createComment(albumid: Int, comment: CommentRequest) = suspendCoroutine<Comment> { cont ->
+        Log.d("ViniloServiceAdapter", "Creando Commentario adapter")
+        requestQueue.add(
+            postRequest("albums/"+albumid+ "/comments", comment, { response ->
+                var strResp = response.toString()
+                Log.d("API", strResp)
+                cont.resume(extractComment(albumid, response))
+            }, {
+                Response.ErrorListener {Log.d("API", "that didn't work") }
+                cont.resumeWithException(it)
+            })
+        )
+    }
+
+    private fun extractComment(albumid: Int, item: JSONObject): Comment {
+        return Comment(
+            id = item.getInt("id"),
+            description = item.getString("description"),
+            rating = Integer.parseInt(item.getString("rating")),
+            albumId = albumid,
+            collectorId = 1
+        )
+    }
+
     suspend fun getArtists() = suspendCoroutine<List<Artist>> { cont ->
         Log.d("ViniloServiceAdapter", "Consultando artistas")
         val dOriginal = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
@@ -131,7 +157,7 @@ class ViniloServiceAdapter constructor(context: Context) {
                     list.add(
                         i, CollectorPerformers(
                             Collector(
-                                id_collector = item.getInt("id"),
+                                id = item.getInt("id"),
                                 name = item.getString("name"),
                                 telephone = item.getString("telephone"),
                                 email = item.getString("email"),
@@ -161,6 +187,7 @@ class ViniloServiceAdapter constructor(context: Context) {
         errorListener: Response.ErrorListener
     ): JsonObjectRequest {
         val jsonString = Gson().toJson(data)
+        Log.d("postRequest", jsonString)
         val body = JSONObject(jsonString)
         return JsonObjectRequest(
             Request.Method.POST, BASE_URL + path, body, responseListener, errorListener

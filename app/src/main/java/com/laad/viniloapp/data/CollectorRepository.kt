@@ -46,13 +46,13 @@ class CollectorRepository(
         for (i in collectorPerformers.indices) {
             Log.d(
                 "CollectorRepository",
-                "Coleccionista ${collectorPerformers[i].collector.id_collector}"
+                "Coleccionista ${collectorPerformers[i].collector.id}"
             )
             cachedCollectorDao.insert(collectorPerformers[i].collector)
 
             for (x in collectorPerformers[i].favoritePerformers.indices) {
                 collectorPerformers[i].favoritePerformers[x].collectorId =
-                    collectorPerformers[i].collector.id_collector
+                    collectorPerformers[i].collector.id
                 favoritePerformersDao.insert(collectorPerformers[i].favoritePerformers[x])
                 Log.d(
                     "CollectorRepository",
