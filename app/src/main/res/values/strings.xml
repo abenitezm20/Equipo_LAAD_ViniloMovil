@@ -45,6 +45,13 @@
         <item>Elektra</item>
         <item>Fania Records</item>
     </string-array>
+    <string-array name="calificaciones">
+        <item>5</item>
+        <item>4</item>
+        <item>3</item>
+        <item>2</item>
+        <item>1</item>
+    </string-array>
     <string name="create_album_button">Guardar</string>
     <string name="invalid_name">Debe ingresar un nombre válido</string>
     <string name="invalid_image_url">Debe ingresar una URL válida para la imagen</string>
@@ -53,5 +60,9 @@
     <string name="invalid_genre">Debe ingresar un género válido</string>
     <string name="invalid_record_label">Debe ingresar una casa discográfica válida</string>
     <string name="album_cover_description">Álbum Cover</string>
->>>>>>> dev
+    <string name="comment_album_button">Comentar</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="invalid_comment_desc">Debe ingresar una descripción valida</string>
+    >>>>>>> dev
 </resources>

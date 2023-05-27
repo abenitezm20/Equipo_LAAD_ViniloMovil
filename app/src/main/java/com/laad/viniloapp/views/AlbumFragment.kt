@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
@@ -18,6 +20,7 @@ import com.laad.viniloapp.ViniloApp
 import com.laad.viniloapp.databinding.AlbumFragmentBinding
 import com.laad.viniloapp.models.Album
 import com.laad.viniloapp.utilities.AppRole
+import com.laad.viniloapp.utilities.Utils
 import com.laad.viniloapp.viewmodels.AlbumViewModel
 import com.laad.viniloapp.views.adapters.AlbumAdapter
 import java.util.Objects
@@ -39,6 +42,14 @@ class AlbumFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         Log.d("AlbumFragment", "onCreateView")
+        /*
+        val t=inflater.inflate(R.layout.album_item, container, false)
+        val spinner = t.findViewById<Spinner>(R.id.optionAlbumSpinner)
+        val optionAlbums = resources.getStringArray(R.array.options_albums)
+        val spinnerAdapter = ArrayAdapter(requireContext(), R.layout.album_spinner_list, optionAlbums)
+        spinnerAdapter.setDropDownViewResource(R.layout.album_spinner_list)
+        spinner.adapter = spinnerAdapter
+        */
         _binding = AlbumFragmentBinding.inflate(inflater, container, false)
         viewModelAdapter = AlbumAdapter()
         return binding.root
