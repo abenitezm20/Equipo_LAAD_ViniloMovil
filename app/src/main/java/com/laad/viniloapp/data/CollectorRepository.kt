@@ -43,16 +43,21 @@ class CollectorRepository(
     private suspend fun insertCollectorPerformers(
         collectorPerformers: List<CollectorPerformers>
     ) {
-
         for (i in collectorPerformers.indices) {
-            Log.d("ESTE", "Coleccionista ${collectorPerformers[i].collector.id_collector}")
+            Log.d(
+                "CollectorRepository",
+                "Coleccionista ${collectorPerformers[i].collector.id}"
+            )
             cachedCollectorDao.insert(collectorPerformers[i].collector)
 
             for (x in collectorPerformers[i].favoritePerformers.indices) {
                 collectorPerformers[i].favoritePerformers[x].collectorId =
-                    collectorPerformers[i].collector.id_collector
+                    collectorPerformers[i].collector.id
                 favoritePerformersDao.insert(collectorPerformers[i].favoritePerformers[x])
-                Log.d("ESTE", "Artista favorito ${collectorPerformers[i].favoritePerformers[x].id_favorite_performers}")
+                Log.d(
+                    "CollectorRepository",
+                    "Artista favorito ${collectorPerformers[i].favoritePerformers[x].id_favorite_performers}"
+                )
             }
         }
     }

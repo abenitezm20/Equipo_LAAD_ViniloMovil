@@ -11,8 +11,8 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
-import com.google.android.material.snackbar.Snackbar
 import com.laad.viniloapp.R
+import com.laad.viniloapp.ViniloApp
 import com.laad.viniloapp.databinding.ActivityHomeBinding
 import com.laad.viniloapp.utilities.AppRole
 
@@ -29,10 +29,6 @@ class HomeActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.appBarHome.toolbar)
 
-//        binding.appBarHome.fab.setOnClickListener { view ->
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                .setAction("Action", null).show()
-//        }
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_home)
@@ -40,7 +36,7 @@ class HomeActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_albums, R.id.nav_collector, R.id.nav_artist, R.id.nav_createalbum
+                R.id.nav_home, R.id.nav_albums, R.id.nav_collector, R.id.nav_artist,
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -75,20 +71,15 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun menuSetting(role:String, navView:NavigationView){
+    private fun menuSetting(role: String, navView: NavigationView) {
         val menu = navView.menu
         val albums = menu.findItem(R.id.nav_albums)
         val collector = menu.findItem(R.id.nav_collector)
         val artist = menu.findItem(R.id.nav_artist)
-        val createalbum = menu.findItem(R.id.nav_createalbum)
         albums.isVisible = true
-        collector.isVisible=true
-        artist.isVisible=true
-        createalbum.isVisible=true
-        if(role == AppRole.VISITOR.value){
-            createalbum.isVisible = false
-        }else if (role == AppRole.COLLECTOR.value){
-            albums.isVisible = false
+        collector.isVisible = true
+        artist.isVisible = true
+        if (role == AppRole.COLLECTOR.value) {
             artist.isVisible = false
             collector.isVisible = false
         }

@@ -5,15 +5,26 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.activity.addCallback
+import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.setFragmentResultListener
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.laad.viniloapp.R
+import com.laad.viniloapp.ViniloApp
 import com.laad.viniloapp.databinding.FragmentAlbumDetailBinding
 import com.laad.viniloapp.models.Album
+import com.laad.viniloapp.utilities.AppRole
 import com.laad.viniloapp.utilities.Utils
+import com.laad.viniloapp.viewmodels.CommentViewModel
 
 class AlbumDetailFragment : Fragment() {
 
@@ -40,6 +51,8 @@ class AlbumDetailFragment : Fragment() {
         binding.detailAlbumRecordLabel.text =
             getString(R.string.album_record_label, album.recordLabel)
         binding.detailAlbumDescription.text = album.description
+
+        setCommentButton(view, album.id)
     }
 
     private fun bindCover(album: Album) {
@@ -47,6 +60,25 @@ class AlbumDetailFragment : Fragment() {
             RequestOptions().placeholder(R.drawable.loading_image)
                 .error(R.drawable.ic_broken_image)
         ).into(binding.albumCover)
+    }
+
+    private fun setCommentButton(view: View, albumId: Int) {
+        val commentAlbumButton: Button = view.findViewById(R.id.comment_album_button)
+        val rol: String = ViniloApp.rol?.value ?: AppRole.VISITOR.value
+        if (AppRole.COLLECTOR.value == rol) {
+            commentAlbumButton.setOnClickListener(View.OnClickListener {
+                //enviando parametros
+                Log.d("setCommentButton", "Enviando parametro albumId:" + albumId.toString())
+                setFragmentResult("requestKey", bundleOf("albumId" to albumId.toString()))
+                findNavController().navigate(R.id.nav_comment_album)
+            })
+        }
+        else {
+            commentAlbumButton?.isEnabled = false
+            commentAlbumButton?.isClickable = false
+            commentAlbumButton?.setTextColor(ContextCompat.getColor(view.context, R.color.Fondo))
+            commentAlbumButton?.setBackgroundColor(ContextCompat.getColor(view.context, R.color.Fondo))
+        }
     }
 
 }

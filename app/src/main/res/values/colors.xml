@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="white">#FFFFFFFF</color>
-    <color name="Azul">#24CEF0</color>
+    <color name="Azul">#10B5CB</color>
     <color name="Fondo">#1E1521</color>
-    <color name="Gris">#7E7E7E</color>
+    <color name="button">#2F7494</color>
+    <color name="button_text">#FFFFFFFF</color>
     <color name="Letra_lista">#7E7E7E</color>
+    <color name="text_hint">#FCF4FA</color>
 </resources>

@@ -3,7 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="album" type="com.laad.viniloapp.models.Album"/>
+
+        <variable
+            name="album"
+            type="com.laad.viniloapp.models.Album" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,38 +31,32 @@
                 android:showDividers="end">
 
                 <TextView
-                    android:id="@+id/textView7"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="5sp"
-                    android:paddingEnd="5sp"
-                    android:paddingBottom="2pt"
-                    android:textColor="@color/Azul"
-                    android:textSize="20sp" />
-
-                <TextView
                     android:id="@+id/textView6"
                     android:layout_width="match_parent"
                     android:layout_height="38dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:paddingStart="5sp"
                     android:paddingEnd="5sp"
                     android:paddingBottom="2pt"
                     android:text="@{album.name}"
                     android:textColor="@color/Azul"
-                    android:textSize="15sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/textView5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
                     android:paddingStart="5sp"
                     android:paddingEnd="5sp"
                     android:text="@{album.genre}"
                     android:textAlignment="textStart"
-                    android:textColor="@color/Letra_lista"
+                    android:textColor="@color/text_hint"
                     android:textColorHighlight="@color/white"
                     android:textDirection="inherit"
-                    android:textSize="15sp" />
+                    android:textSize="18sp" />
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

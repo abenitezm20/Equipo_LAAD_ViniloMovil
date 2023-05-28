@@ -6,7 +6,7 @@ import java.io.Serializable
 
 @Entity(tableName = "cached_collector")
 data class Collector(
-    @PrimaryKey val id_collector: Int,
+    @PrimaryKey val id: Int,
     val name: String,
     val telephone: String,
     val email: String,
