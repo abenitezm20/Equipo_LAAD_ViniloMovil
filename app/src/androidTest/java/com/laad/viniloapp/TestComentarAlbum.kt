@@ -82,6 +82,7 @@ class TestComentarAlbum {
         )
 
         //Calificacion
+        val rnds = (0..5).random()
         Thread.sleep(1000)
         val calificaSpinner = Espresso.onView(
             Matchers.allOf(
@@ -92,7 +93,7 @@ class TestComentarAlbum {
         Espresso.onData(
             Matchers.allOf(
                 CoreMatchers.`is`(CoreMatchers.instanceOf(String::class.java)),
-                CoreMatchers.`is`("4")
+                CoreMatchers.`is`(rnds.toString())
             )
         ).perform(
             ViewActions.click()

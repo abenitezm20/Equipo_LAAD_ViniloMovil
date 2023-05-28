@@ -11,6 +11,7 @@ import com.laad.viniloapp.data.database.VinylRoomDatabase
 import com.laad.viniloapp.models.Comment
 import com.laad.viniloapp.utilities.COMMENT_CREATED
 import com.laad.viniloapp.utilities.COMMENT_ERROR
+import com.laad.viniloapp.utilities.CREATING_ALBUM
 import com.laad.viniloapp.utilities.CREATING_COMMENT
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -45,6 +46,7 @@ class CommentViewModel(application: Application) : AndroidViewModel(application)
         collectorId: Int
     ) {
         try {
+            _isCreateCommentError.value = CREATING_COMMENT
             viewModelScope.launch(Dispatchers.Default) {
                 withContext(Dispatchers.IO) {
                     commentRepository.createComment(
@@ -62,5 +64,9 @@ class CommentViewModel(application: Application) : AndroidViewModel(application)
         } catch (e: Exception) {
             _isCreateCommentError.value = COMMENT_ERROR
         }
+    }
+
+    fun resetCreateCommentFlag() {
+        _isCreateCommentError.value = CREATING_COMMENT
     }
 }

@@ -46,6 +46,9 @@ class CommentAlbumFragment : Fragment() {
         setFragmentResultListener("requestKey") { key, bundle ->
             albumIdparam = Integer.parseInt(bundle.getString("albumId"))
             Log.d("CommentAlbumFragment", "Recibiendo parametro albumId:"+albumIdparam)
+            val activity = requireNotNull(this.activity)
+            commentViewModel = CommentViewModel.getInstance(activity.application)
+            commentViewModel.resetCreateCommentFlag()
         }
     }
 
@@ -72,7 +75,9 @@ class CommentAlbumFragment : Fragment() {
             Log.d("CommentAlbumFragment", "Llego codigo error $codeError")
             when (codeError) {
                 CREATING_COMMENT -> Log.d("CommentAlbumFragment", "En proceso creacion comentario")
-                COMMENT_CREATED -> findNavController().navigate(R.id.nav_albums)
+                COMMENT_CREATED -> {
+                    findNavController().navigate(R.id.nav_albums)
+                }
                 else -> context?.let { Utils.showToast(it, "Network Error") }
             }
         })
@@ -81,7 +86,6 @@ class CommentAlbumFragment : Fragment() {
     private fun setCreateButton(view: View) {
         val createCommentButton: Button = view.findViewById(R.id.save_comment_button)
         createCommentButton.setOnClickListener(View.OnClickListener {
-            Log.d("CommentAlbumFragment", "Creando Comment")
             processNewComment(view)
         })
     }

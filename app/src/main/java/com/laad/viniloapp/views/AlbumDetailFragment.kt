@@ -24,6 +24,7 @@ import com.laad.viniloapp.databinding.FragmentAlbumDetailBinding
 import com.laad.viniloapp.models.Album
 import com.laad.viniloapp.utilities.AppRole
 import com.laad.viniloapp.utilities.Utils
+import com.laad.viniloapp.viewmodels.CommentViewModel
 
 class AlbumDetailFragment : Fragment() {
 
@@ -70,7 +71,6 @@ class AlbumDetailFragment : Fragment() {
                 Log.d("setCommentButton", "Enviando parametro albumId:" + albumId.toString())
                 setFragmentResult("requestKey", bundleOf("albumId" to albumId.toString()))
                 findNavController().navigate(R.id.nav_comment_album)
-
             })
         }
         else {
