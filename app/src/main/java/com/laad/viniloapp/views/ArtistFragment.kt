@@ -1,14 +1,14 @@
 package com.laad.viniloapp.views
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.addCallback
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,17 +16,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.laad.viniloapp.R
 import com.laad.viniloapp.databinding.ArtistFragmentBinding
 import com.laad.viniloapp.models.Artist
-import com.laad.viniloapp.viewmodels.AlbumViewModel
 import com.laad.viniloapp.viewmodels.ArtistViewModel
 import com.laad.viniloapp.views.adapters.ArtistAdapter
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ArtistFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class ArtistFragment : Fragment() {
 
+class ArtistFragment : Fragment() {
     private var _binding: ArtistFragmentBinding? = null
     private val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
@@ -38,12 +32,12 @@ class ArtistFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = ArtistFragmentBinding.inflate(inflater, container, false)
-        val view = binding.root
         viewModelAdapter = ArtistAdapter()
-        return view
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        Log.d("ArtistFragment", "onViewCreated")
         recyclerView = binding.artistRv
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = viewModelAdapter
@@ -60,18 +54,21 @@ class ArtistFragment : Fragment() {
                 viewModelAdapter!!.artists = this
             }
         })
-        viewModel.eventNetworkError.observe(viewLifecycleOwner, Observer<Boolean> { isNetworkError ->
-            if (isNetworkError) onNetworkError()
-        })
+        viewModel.eventNetworkError.observe(
+            viewLifecycleOwner,
+            Observer<Boolean> { isNetworkError ->
+                if (isNetworkError) onNetworkError()
+            })
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        Log.d("ArtistFragment", "onDestroyView")
         _binding = null
     }
 
     private fun onNetworkError() {
-        if(!viewModel.isNetworkErrorShown.value!!) {
+        if (!viewModel.isNetworkErrorShown.value!!) {
             Toast.makeText(activity, "Network Error", Toast.LENGTH_LONG).show()
             viewModel.onNetworkErrorShown()
         }
@@ -79,14 +76,21 @@ class ArtistFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("ArtistFragment", "onCreate")
         //Controla para que cuando se le de atras retorne al mainActivity
         val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
             findNavController().navigate(R.id.action_nav_artist_to_mainActivity);
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        Log.d("ArtistFragment", "onPause")
+    }
+
     override fun onResume() {
         super.onResume()
-        viewModel.refreshDataFromNetwork()
+        Log.d("ArtistFragment", "onResume")
     }
+
 }

@@ -7,7 +7,7 @@ import java.io.Serializable
 data class CollectorPerformers(
     @Embedded val collector: Collector,
     @Relation(
-        parentColumn = "id_collector",
+        parentColumn = "id",
         entityColumn = "collectorId"
     )
     val favoritePerformers: List<FavoritePerformers>
